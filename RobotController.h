@@ -8,12 +8,12 @@ class FestoRobotAPI; // FestoRobotAPI sýnýfý için ileri bildirim
 class RobotController {
 private:
     Pose* position;           // Robotun pozisyonu
-    FestoRobotAPI* robotAPI;  // Festo Robot API eriþimi
+    FestoRobotAPI* robotAPI;  // Festo Robot API eriþimi (dýþarýdan alýnýr, yönetimi kullanýcýya aittir)
     bool connectionStatus;    // Robot baðlantý durumu
 
 public:
     // Constructor ve Destructor
-    RobotController();
+    RobotController(FestoRobotAPI* api); // API nesnesini dýþarýdan alan constructor
     ~RobotController();
 
     // Robot Kontrol Fonksiyonlarý
@@ -35,4 +35,5 @@ public:
 };
 
 #endif // ROBOTCONTROLLER_H
+
 

@@ -5,8 +5,11 @@
 #include <windows.h> // Sleep için
 
 // Constructor
-RobotController::RobotController()
-    : position(new Pose()), robotAPI(new FestoRobotAPI()), connectionStatus(false) {
+RobotController::RobotController(FestoRobotAPI* api)
+    : position(new Pose()), robotAPI(api), connectionStatus(false) {
+    if (!robotAPI) {
+        throw std::invalid_argument("Robot API cannot be null");
+    }
 }
 
 // Destructor
@@ -109,7 +112,7 @@ void RobotController::print() const {
 bool RobotController::connectRobot() {
     if (!connectionStatus) {
         robotAPI->connect();
-        Sleep(2000);
+        Sleep(2000); 
         connectionStatus = true;
         std::cout << "Robot connected successfully.\n";
         return true;
