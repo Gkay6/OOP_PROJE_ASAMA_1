@@ -2,21 +2,21 @@
 #define ROBOTCONTROLLER_H
 
 #include "Pose.h"
-
-class FestoRobotAPI; // FestoRobotAPI sýnýfý için ileri bildirim
+#include "FestoRobotAPI.h"
+// Forward declaration for the FestoRobotAPI class
 
 class RobotController {
 private:
-    Pose* position;           // Robotun pozisyonu
-    FestoRobotAPI* robotAPI;  // Festo Robot API eriþimi (dýþarýdan alýnýr, yönetimi kullanýcýya aittir)
-    bool connectionStatus;    // Robot baðlantý durumu
+    Pose* position;           // Position of the robot
+    FestoRobotAPI* robotAPI;  // Access to the Festo Robot API (provided externally, managed by the user)
+    bool connectionStatus;    // Connection status of the robot
 
 public:
-    // Constructor ve Destructor
-    RobotController(FestoRobotAPI* api); // API nesnesini dýþarýdan alan constructor
+    // Constructor and Destructor
+    RobotController(FestoRobotAPI* api); // Constructor that takes an API object
     ~RobotController();
 
-    // Robot Kontrol Fonksiyonlarý
+    // Robot Control Functions
     void turnLeft();
     void turnRight();
     void moveForward();
@@ -25,15 +25,17 @@ public:
     void moveRight();
     void stop();
 
-    // Bilgi Fonksiyonlarý
+    // Information Functions
     Pose getPose() const;
     void print() const;
 
-    // Baðlantý Fonksiyonlarý
+    // Connection Functions
     bool connectRobot();
     bool disconnectRobot();
 };
 
+void RobotControllerTest(RobotController& robotino);
 #endif // ROBOTCONTROLLER_H
+
 
 
