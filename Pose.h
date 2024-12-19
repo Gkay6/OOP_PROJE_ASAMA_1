@@ -1,20 +1,20 @@
 #ifndef POSE_H
 #define POSE_H
 
-#include <cmath> // sqrt, atan2
+#include <cmath> // For sqrt and atan2
 #include <iostream>
 
 class Pose {
 private:
-    double x;   // X koordinatı
-    double y;   // Y koordinatı
-    double th;  // Derece cinsinden yön açısı
+    double x;   // X coordinate
+    double y;   // Y coordinate
+    double th;  // Orientation angle in degrees
 
 public:
     // Constructor
     Pose(double _x = 0.0, double _y = 0.0, double _th = 0.0);
 
-    // Getter ve Setter metotları
+    // Getter and Setter methods
     double getX() const;
     void setX(double _x);
 
@@ -24,7 +24,7 @@ public:
     double getTh() const;
     void setTh(double _th);
 
-    // Operatör aşırı yükleme
+    // Operator overloading
     bool operator==(const Pose& other) const;
     Pose operator+(const Pose& other) const;
     Pose operator-(const Pose& other) const;
@@ -32,14 +32,16 @@ public:
     Pose& operator-=(const Pose& other);
     bool operator<(const Pose& other) const;
 
-    // Pozisyon ayarlama ve alma
+    // Set and get position
     void setPose(double _x, double _y, double _th);
     void getPose(double& _x, double& _y, double& _th) const;
 
-    // İki Pose arasındaki mesafe ve açı farkı
+    // Distance and angle difference between two Poses
     double findDistanceTo(const Pose& pos) const;
     double findAngleTo(const Pose& pos) const;
 };
+
 #endif // POSE_H
+
 
 
