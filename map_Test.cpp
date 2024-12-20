@@ -1,6 +1,6 @@
 #include <iostream>
 #include "MAP.h"
-#include "POINT.h"
+#include "Point.h"
 
 // Positive and Negative Test Cases
 void test_insertPoint();
@@ -40,9 +40,9 @@ void test_insertPoint() {
     std::cout << "==== TEST: insertPoint ====\n";
     MAP myMap(5, 5);
 
-    POINT validPoint(2, 3);
-    POINT invalidPoint(-1, 7); // Negative coordinates
-    POINT outOfBoundsPoint(10, 10); // Out-of-bounds coordinates
+    Point validPoint(2, 3);
+    Point invalidPoint(-1, 7); // Negative coordinates
+    Point outOfBoundsPoint(10, 10); // Out-of-bounds coordinates
 
     myMap.insertPoint(validPoint);
     std::cout << "Valid point (2,3) added to the grid:\n";
@@ -65,7 +65,7 @@ void test_getSetGrid() {
     std::cout << "After setGrid(2, 2, 1), map:\n";
     myMap.showMap();
     std::cout << "getGrid(2, 2): " << myMap.getGrid(2, 2) << "\n";
-    //hatalý olacak durumlar
+    //hatalÄ± olacak durumlar
     myMap.setGrid(6, 6, 1);//bu nokta yok
      myMap.getGrid(-1, -1);//bu negatif
 }
@@ -147,7 +147,7 @@ void test_setGridSize() {
 void test_getSetXandY() {
     std::cout << "\n==== TEST: getX, getY, setX, setY ====\n";
 
-    POINT p(2, 3);
+    Point p(2, 3);
     std::cout << "Initial Point: (" << p.getX() << ", " << p.getY() << ")\n";
 
     p.setX(5);
@@ -158,7 +158,7 @@ void test_getSetXandY() {
 void test_setPoint() {
     std::cout << "\n==== TEST: setPoint ====\n";
 
-    POINT p(2, 3);
+    Point p(2, 3);
     std::cout << "Initial Point: (" << p.getX() << ", " << p.getY() << ")\n";
 
     p.setPoint(6, 8);
@@ -168,8 +168,8 @@ void test_setPoint() {
 void test_findDistanceToPos() {
     std::cout << "\n==== TEST: findDistanceToPos ====\n";
 
-    POINT p1(2, 3);
-    POINT p2(6, 8);
+    Point p1(2, 3);
+    Point p2(6, 8);
 
     double distance = p1.findDistanceToPos(p2);
     std::cout << "Distance between (" << p1.getX() << ", " << p1.getY() << ") and ("
@@ -182,8 +182,8 @@ void test_findDistanceToPos() {
 void test_findAngleToPos() {
     std::cout << "\n==== TEST: findAngleToPos ====\n";
 
-    POINT p1(1, 1);
-    POINT p2(1, 1);
+    Point p1(1, 1);
+    Point p2(1, 1);
 
     try {
         double angle = p1.findAngleToPos(p2);
@@ -197,9 +197,9 @@ void test_findAngleToPos() {
 void test_operatorEquality() {
     std::cout << "\n==== TEST: operator== ====\n";
 
-    POINT p1(2, 3);
-    POINT p2(2, 3);
-    POINT p3(5, 7);
+    Point p1(2, 3);
+    Point p2(2, 3);
+    Point p3(5, 7);
 
     if (p1 == p2)
         std::cout << "p1 and p2 are equal.\n";
