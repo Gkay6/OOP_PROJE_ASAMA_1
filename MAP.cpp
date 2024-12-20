@@ -24,7 +24,7 @@ MAP::~MAP() {
 }
 
 // Assigns a value of 1 to the point's coordinates on the grid
-void MAP::insertPoint(const POINT& point) {
+void MAP::insertPoint(const Point& point) {
     int gridX = int(point.getX());
     int gridY = int(point.getY());
 
