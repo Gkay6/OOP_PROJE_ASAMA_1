@@ -20,8 +20,8 @@ public:
     void setPoint(double _x, double _y);     // Sets both X and Y coordinates
 
     // Operations between points
-    double findDistanceToPos(const POINT& p) const;  // Calculates the distance to another point
-    double findAngleToPos(const POINT& p) const;     // Calculates the angle to another point
+    double findDistanceToPos(const Point& p) const;  // Calculates the distance to another point
+    double findAngleToPos(const Point& p) const;     // Calculates the angle to another point
 
     // Operator overloads
     bool operator==(const POINT& p) const;           // Compares equality between points
