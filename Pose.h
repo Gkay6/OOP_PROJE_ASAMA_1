@@ -40,7 +40,7 @@ public:
     double findDistanceTo(const Pose& pos) const;
     double findAngleTo(const Pose& pos) const;
 };
-
+void PoseTest();
 #endif // POSE_H
 
 
