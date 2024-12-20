@@ -1,8 +1,8 @@
-#include "RobotController.h"
+ï»¿#include "RobotController.h"
 #include "FestoRobotAPI.h"
 #include "Pose.h"
 #include <iostream>
-#include <windows.h> // Sleep için
+#include <windows.h> // Sleep iï¿½in
 
 // Constructor
 RobotController::RobotController(FestoRobotAPI* api)
@@ -22,7 +22,7 @@ RobotController::~RobotController() {
     std::cout << "RobotController destroyed.\n";
 }
 
-// Robot Kontrol Fonksiyonlarý
+// Robot Kontrol Fonksiyonlarï¿½
 void RobotController::turnLeft() {
     std::cout << "Robot turning left...\n";
     robotAPI->rotate(LEFT);
@@ -31,25 +31,25 @@ void RobotController::turnLeft() {
 void RobotController::turnRight() {
     std::cout << "Robot turning right...\n";
     robotAPI->rotate(RIGHT);
-    
+
 }
 
 void RobotController::moveForward() {
     std::cout << "Robot moving forward...\n";
     robotAPI->move(FORWARD);
-   
+
 }
 
 void RobotController::moveBackward() {
     std::cout << "Robot moving backward...\n";
     robotAPI->move(BACKWARD);
-    
+
 }
 
 void RobotController::moveLeft() {
     std::cout << "Robot moving left sideways...\n";
     robotAPI->move(LEFT);
-    
+
 }
 
 void RobotController::moveRight() {
@@ -62,7 +62,7 @@ void RobotController::stop() {
     robotAPI->stop();
 }
 
-// Bilgi Fonksiyonlarý
+// Bilgi Fonksiyonlarï¿½
 Pose RobotController::getPose() const {
     double x, y, th;
     robotAPI->getXYTh(x, y, th);
@@ -71,16 +71,17 @@ Pose RobotController::getPose() const {
 }
 
 void RobotController::print() const {
+    /*
     double x, y, th;
     robotAPI->getXYTh(x, y, th);
 
-    // Pose bilgilerini yazdýr
+    // Pose bilgilerini yazdï¿½r
     std::cout << "-------------------- SENSOR VALUES --------------------\n";
     std::cout << "POSE         : (X) " << x << " meters, "
         << "(Y) " << y << " meters, "
         << "(Th) " << (th * 180) / 3.14 << " degrees\n\n";
 
-    // IR Sensör deðerlerini yazdýr
+    // IR Sensï¿½r deï¿½erlerini yazdï¿½r
     double ir[9];
     for (int i = 0; i < 9; i++)
         ir[i] = robotAPI->getIRRange(i);
@@ -94,7 +95,7 @@ void RobotController::print() const {
     std::cout << "    " << ir[4] << "     " << ir[5] << "      \n";
     std::cout << "------------------------------------------------------\n";
 
-    // Lidar deðerlerini yazdýr
+    // Lidar deï¿½erlerini yazdï¿½r
     int number = robotAPI->getLidarRangeNumber();
     float* ranges = new float[number];
     robotAPI->getLidarRange(ranges);
@@ -106,14 +107,24 @@ void RobotController::print() const {
     std::cout << "------------------------------------------------------\n";
 
     delete[] ranges;
+    */
+    std::cout << "-------------------- SENSOR VALUES --------------------\n";
+    std::cout << "POSE         : (X) " << this->getPose().getX() << " meters, "
+        << "(Y) " << this->getPose().getY() << " meters, "
+        << "(Th) " << (this->getPose().getTh() * 180) / 3.14 << " degrees\n\n";
 }
 
-// Baðlantý Fonksiyonlarý
+// Baï¿½lantï¿½ Fonksiyonlarï¿½
 bool RobotController::connectRobot() {
     if (!connectionStatus) {
         robotAPI->connect();
-        Sleep(2000); 
+        Sleep(2000);
         connectionStatus = true;
+        //
+        double x = 0, y = 0, th = 0;
+        robotAPI->getXYTh(x, y, th);
+        position->setPose(x, y, th);
+        //
         std::cout << "Robot connected successfully.\n";
         return true;
     }
