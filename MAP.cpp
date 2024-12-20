@@ -3,7 +3,7 @@
 
 // Constructor: Sets grid dimensions and initializes all grid elements to 0
 
-MAP::MAP(int x, int y) : gridNumberX(x), gridNumberY(y) {
+MAP::MAP(int x, int y, int roomx, int roomy ) : gridNumberX(x), gridNumberY(y), room_X(roomx), room_Y(roomy){
     grid = new int* [gridNumberY];
     for (int i = 0; i < gridNumberY; ++i) {
         grid[i] = new int[gridNumberX];
@@ -25,33 +25,42 @@ MAP::~MAP() {
 
 // Assigns a value of 1 to the point's coordinates on the grid
 void MAP::insertPoint(const Point& point) {
-    int gridX = int(point.getX());
-    int gridY = int(point.getY());
+    int gridX = point.getX() - room_X;
+    int gridY = point.getY() - room_Y;
+
+    std::cout << "at that coordinate :"<< gridX << "," << gridY << "\n";
 
     if (gridX >= 0 && gridX < gridNumberX && gridY >= 0 && gridY < gridNumberY) {
-        grid[gridY][gridX] = 1; // Correct access
-    } else {
-        std::cerr << "Error: The point is not in the area!\n";
+        grid[gridY][gridX] = 1;
+    }
+    else {
+        std::cerr << "Error: The point is out of the valid grid area!" << std::endl;
     }
 }
 
 // Returns the value at the given grid coordinates
-int MAP::getGrid(int x, int y) const {// Returns an error code if negative or out-of-bound indices
-    if (x < 0 || y < 0 || x >= gridNumberX || y >= gridNumberY) {
+int MAP::getGrid(int x, int y) const {
+    int adjustedX = x - room_X;
+    int adjustedY = y - room_Y;
+
+    if (adjustedX < 0 || adjustedY < 0 || adjustedX >= gridNumberX || adjustedY >= gridNumberY) {
         std::cerr << "Error: Invalid grid coordinates (" << x << ", " << y << ")." << std::endl;
-        return -1;// Error code for invalid index
+        return -1;
     }
-    return grid[y][x]; // Correct access
+    return grid[adjustedY][adjustedX];
 }
 
 
 // Sets a value at the specified grid index: for example, setting (2, 2) to 1
 void MAP::setGrid(int x, int y, int value) {
-    if (x < 0 || y < 0 || x >= gridNumberX || y >= gridNumberY) {
+    int adjustedX = x - room_X;
+    int adjustedY = y - room_Y;
+
+    if (adjustedX < 0 || adjustedY < 0 || adjustedX >= gridNumberX || adjustedY >= gridNumberY) {
         std::cerr << "Error: Invalid grid coordinates (" << x << ", " << y << ")." << std::endl;
-        return; //No operation for invalid index
+        return;
     }
-    grid[y][x] = value; // Correct access
+    grid[adjustedY][adjustedX] = value;
 }
 
 
