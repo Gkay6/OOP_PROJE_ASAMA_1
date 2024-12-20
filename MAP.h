@@ -6,11 +6,12 @@ class MAP {
 private:
     int gridNumberX; // X eksenindeki grid sayısı
     int gridNumberY; // Y eksenindeki grid sayısı
+    int room_X;//odanın x verisi
+    int room_Y;//odanın y verisi    
     int** grid;      // 2D grid (0: boş, 1: dolu)
 
 public:
-    // Constructor ve Destructor
-    MAP(int x = 10, int y = 10);
+    MAP(int x = 10, int y = 10, int roomx = 0, int roomy = 0);
     ~MAP();
 
     // Nokta ekleme
