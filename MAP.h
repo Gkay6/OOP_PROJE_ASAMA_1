@@ -1,17 +1,17 @@
 #pragma once
 #include <iostream>
-#include <vector>
 #include "POINT.h"
 
 class MAP {
 private:
     int gridNumberX; // X eksenindeki grid sayýsý
     int gridNumberY; // Y eksenindeki grid sayýsý
-    std::vector<std::vector<int>> grid; // 2D grid (0: boþ, 1: dolu)
+    int** grid;      // 2D grid (0: boþ, 1: dolu)
 
 public:
-    // Constructor
+    // Constructor ve Destructor
     MAP(int x = 10, int y = 10);
+    ~MAP();
 
     // Nokta ekleme
     void insertPoint(const POINT& point);
@@ -28,6 +28,7 @@ public:
     // Grid boyut iþlemleri
     int getNumberX() const;
     int getNumberY() const;
+
     void addGridSize(int x, int y);
     void setGridSize(int x, int y);
 };
