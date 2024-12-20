@@ -4,8 +4,8 @@
 class Encryption {
 
 public:
-	int Encrypt(int password);
-	int Decrypt(int password);
+	static int encrypt(int password);
+	static int decrypt(int password);
 };
 
 
