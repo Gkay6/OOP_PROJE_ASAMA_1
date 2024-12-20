@@ -3,14 +3,14 @@
 #include <cmath>     // For mathematical calculations
 #include <cassert>   // For error checking (optional)
 
-class POINT {
+class Point {
 public:
     // Member variables
     double x;
     double y;
 
     // Constructor: Default and parameterized
-    POINT(double _x = 0.0, double _y = 0.0) : x(_x), y(_y) {}
+    Point(double _x = 0.0, double _y = 0.0) : x(_x), y(_y) {}
 
     // Getter and Setter Functions
     double getX() const;                     // Returns the X coordinate
