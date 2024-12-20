@@ -121,8 +121,8 @@ void test_addGridSize() {
     myMap.addGridSize(2, 3);
     std::cout << "After addGridSize(2, 3), map:\n";
     myMap.showMap();
-
-        myMap.addGridSize(-1, -1);
+    //negative test
+    myMap.addGridSize(-1, -1);
 }
 
 void test_setGridSize() {
@@ -135,8 +135,9 @@ void test_setGridSize() {
     myMap.setGridSize(7, 8);
     std::cout << "After setGridSize(7, 8), map:\n";
     myMap.showMap();
-
+    //negative tests
     myMap.setGridSize(-5, -5);
+    //positive test for resize minimal grid
     myMap.setGridSize(3, 3);
 
     std::cout << "After setGridSize(3, 3), map:\n";
