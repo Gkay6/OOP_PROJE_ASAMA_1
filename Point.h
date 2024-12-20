@@ -24,5 +24,5 @@ public:
     double findAngleToPos(const Point& p) const;     // Calculates the angle to another point
 
     // Operator overloads
-    bool operator==(const POINT& p) const;           // Compares equality between points
+    bool operator==(const Point& p) const;           // Compares equality between points
 };
