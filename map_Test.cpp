@@ -38,28 +38,34 @@ int main() {
 
 void test_insertPoint() {
     std::cout << "==== TEST: insertPoint ====\n";
-    MAP myMap(5, 5);
+    MAP myMap(15, 15, -3, -3);
 
     Point validPoint(2, 3);
-    Point invalidPoint(-1, 7); // Negative coordinates
-    Point outOfBoundsPoint(10, 10); // Out-of-bounds coordinates
+    Point invalidPoint(-1, -2); // Negative coordinates
+    Point validPoint2(10, 10); // Out-of-bounds coordinates
+    Point outOfBoundsPoint(100, 100); // Out-of-bounds coordinates
 
     myMap.insertPoint(validPoint);
     std::cout << "Valid point (2,3) added to the grid:\n";
     myMap.showMap();
 
     myMap.insertPoint(invalidPoint);
-    std::cout << "Invalid point (-1,7) could not be added to the grid:\n";
+
+    std::cout << "Valid point (-1,-2) added to the grid:\n";
+    myMap.showMap();
+
+    myMap.insertPoint(validPoint2);
+
+    std::cout << "Valid point (10,10) added to the grid:\n";
     myMap.showMap();
 
     myMap.insertPoint(outOfBoundsPoint);
-    std::cout << "Out-of-bounds point (10,10) could not be added to the grid:\n";
-    myMap.showMap();
+
 }
 
 void test_getSetGrid() {
     std::cout << "\n==== TEST: getGrid and setGrid ====\n";
-    MAP myMap(5, 5);
+    MAP myMap(15, 15, -3, -3);
 
     myMap.setGrid(2, 2, 1);
     std::cout << "After setGrid(2, 2, 1), map:\n";
@@ -67,12 +73,12 @@ void test_getSetGrid() {
     std::cout << "getGrid(2, 2): " << myMap.getGrid(2, 2) << "\n";
     //hatalı olacak durumlar
     myMap.setGrid(6, 6, 1);//bu nokta yok
-     myMap.getGrid(-1, -1);//bu negatif
+    myMap.getGrid(-1, -1);//bu negatif
 }
 
 void test_clearMap() {
     std::cout << "\n==== TEST: clearMap ====\n";
-    MAP myMap(5, 5);
+    MAP myMap(15, 15, -3, -3);
 
     myMap.setGrid(2, 2, 1);
     myMap.setGrid(3, 3, 1);
@@ -86,7 +92,7 @@ void test_clearMap() {
 
 void test_printInfo() {
     std::cout << "\n==== TEST: printInfo ====\n";
-    MAP myMap(5, 5);
+    MAP myMap(15, 15, -3, -3);
 
     std::cout << "Map information:\n";
     myMap.printInfo();
@@ -94,7 +100,7 @@ void test_printInfo() {
 
 void test_showMap() {
     std::cout << "\n==== TEST: showMap ====\n";
-    MAP myMap(5, 5);
+    MAP myMap(15, 15, -3, -3);
 
     myMap.setGrid(1, 1, 1);
     myMap.setGrid(3, 3, 1);
@@ -113,7 +119,7 @@ void test_getNumberXandY() {
 
 void test_addGridSize() {
     std::cout << "\n==== TEST: addGridSize ====\n";
-    MAP myMap(5, 5);
+    MAP myMap(15, 15, -3, -3);
 
     std::cout << "Initial map:\n";
     myMap.showMap();
@@ -127,7 +133,7 @@ void test_addGridSize() {
 
 void test_setGridSize() {
     std::cout << "\n==== TEST: setGridSize ====\n";
-    MAP myMap(5, 5);
+    MAP myMap(15, 15, -3, -3);
 
     std::cout << "Initial map:\n";
     myMap.showMap();
