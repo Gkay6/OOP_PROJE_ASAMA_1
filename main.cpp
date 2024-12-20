@@ -13,6 +13,5 @@ int main() {
 	Menu robot_control_menu(robot);
 
 
-	delete robot;
 	return 0;
 }
