@@ -75,10 +75,10 @@ void test_getSetGrid() {
     
     myMap.setGrid(6, 6, 1);
     std::cout << "getGrid(6,6): " << myMap.getGrid(6, 6) << "\n";
-    myMap.setGrid(-1, -1, 1);//bu nokta negatif
+    myMap.setGrid(-1, -1, 1);//negative
     std::cout << "getGrid(-1,-1): " << myMap.getGrid(-1, -1) << "\n";//negative
-    myMap.setGrid(50, 50, 1);//this point not in the area
-    myMap.getGrid(100, 100);//this point not in the area
+    myMap.setGrid(50, 50, 1);//this point is not in the grid
+    myMap.getGrid(100, 100);//this point is not in the grid
 }
 
 void test_clearMap() {
