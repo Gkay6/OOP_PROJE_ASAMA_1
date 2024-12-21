@@ -1,78 +1,158 @@
 #include "MAP.h"
+#include <iostream>
 
-// Constructor: Grid boyutlarýný ayarlar ve tüm gridlere 0 deðeri atar
-MAP::MAP(int x, int y) : gridNumberX(x), gridNumberY(y) {
-    grid.resize(gridNumberY, std::vector<int>(gridNumberX, 0));
+// Constructor: Sets grid dimensions and initializes all grid elements to 0
+
+MAP::MAP(int x, int y, int roomx, int roomy ) : gridNumberX(x), gridNumberY(y), room_X(roomx), room_Y(roomy){
+    grid = new int* [gridNumberY];
+    for (int i = 0; i < gridNumberY; ++i) {
+        grid[i] = new int[gridNumberX];
+        // Initialize all elements in each row to zero
+        for (int j = 0; j < gridNumberX; ++j) {
+            grid[i][j] = 0;
+        }
+    }
 }
 
-// Noktanýn grid üzerindeki koordinatýna 1 deðeri atanýr
-void MAP::insertPoint(const POINT& point) {
-    int gridX = static_cast<int>(point.getX());
-    int gridY = static_cast<int>(point.getY());
+
+// Destructor: Cleans up dynamic memory
+MAP::~MAP() {
+    for (int i = 0; i < gridNumberY; ++i) {
+        delete[] grid[i];
+    }
+    delete[] grid;
+}
+
+// Assigns a value of 1 to the point's coordinates on the grid
+void MAP::insertPoint(const Point& point) {
+    int gridX = point.getX() - room_X;
+    int gridY = point.getY() - room_Y;
+
+    std::cout << "at that coordinate :"<< gridX << "," << gridY << "\n";
 
     if (gridX >= 0 && gridX < gridNumberX && gridY >= 0 && gridY < gridNumberY) {
         grid[gridY][gridX] = 1;
     }
     else {
-        std::cerr << "Error: The point not in the area!\n";
+        std::cerr << "Error: The point is out of the valid grid area!" << std::endl;
     }
 }
 
-// Griddeki deðeri döner
+// Returns the value at the given grid coordinates
 int MAP::getGrid(int x, int y) const {
-    assert(x >= 0 && x < gridNumberX && y >= 0 && y < gridNumberY);
-    return grid[y][x];
+    int adjustedX = x - room_X;
+    int adjustedY = y - room_Y;
+
+    if (adjustedX < 0 || adjustedY < 0 || adjustedX >= gridNumberX || adjustedY >= gridNumberY) {
+        std::cerr << "Error: Invalid grid coordinates (" << x << ", " << y << ")." << std::endl;
+        return -1;
+    }
+    return grid[adjustedY][adjustedX];
 }
 
-// Belirtilen indekse deðer atar
+
+// Sets a value at the specified grid index: for example, setting (2, 2) to 1
 void MAP::setGrid(int x, int y, int value) {
-    assert(x >= 0 && x < gridNumberX && y >= 0 && y < gridNumberY);
-    grid[y][x] = value;
+    int adjustedX = x - room_X;
+    int adjustedY = y - room_Y;
+
+    if (adjustedX < 0 || adjustedY < 0 || adjustedX >= gridNumberX || adjustedY >= gridNumberY) {
+        std::cerr << "Error: Invalid grid coordinates (" << x << ", " << y << ")." << std::endl;
+        return;
+    }
+    grid[adjustedY][adjustedX] = value;
 }
 
-// Tüm gridleri 0 deðerine sýfýrlar
+
+// Resets all grids to zero
 void MAP::clearMap() {
-    for (auto& row : grid) {
-        std::fill(row.begin(), row.end(), 0);
+    for (int i = 0; i < gridNumberY; ++i) {
+        for (int j = 0; j < gridNumberX; ++j) {
+            grid[i][j] = 0; // Correct access
+        }
     }
 }
 
-// Harita bilgilerini ekrana bastýrýr
+// Prints grid information
 void MAP::printInfo() const {
     std::cout << "Grid Size: " << gridNumberX << " x " << gridNumberY << "\n";
     std::cout << "Total Grid Number: " << gridNumberX * gridNumberY << "\n";
 }
 
-// Grid'i ekrana bastýrýr
+// Prints the grid to the console
 void MAP::showMap() const {
-    for (const auto& row : grid) {
-        for (int cell : row) {
-            std::cout << (cell == 0 ? "." : "x") << " ";
+    for (int i = 0; i < gridNumberY; ++i) {
+        for (int j = 0; j < gridNumberX; ++j) {
+            std::cout << (grid[i][j] == 0 ? "." : "x") << " "; // DoÄŸru eriÅŸim
         }
         std::cout << "\n";
     }
 }
 
-// X eksenindeki grid sayýsýný döner
+// Returns the number of grids along the X axis
 int MAP::getNumberX() const {
     return gridNumberX;
 }
 
-// Y eksenindeki grid sayýsýný döner
+// Returns the number of grids along the Y axis
 int MAP::getNumberY() const {
     return gridNumberY;
 }
-
-// Grid boyutlarýný büyütür (yeni boyut ekler)
 void MAP::addGridSize(int x, int y) {
-    gridNumberX += x;
-    gridNumberY += y;
-    grid.resize(gridNumberY, std::vector<int>(gridNumberX, 0));
+    if (x < 0 || y < 0 ) {
+        std::cerr << "Error: Invalid values." << std::endl;
+        return; // No operation for invalid index
+    }
+    // Get the current grid dimensions
+
+    // Calculate the new grid dimensions
+    int newGridNumberX = gridNumberX + x;
+    int newGridNumberY = gridNumberY + y;
+
+    // Allocate memory for the new grid
+    int** newGrid = new int* [newGridNumberY];
+    for (int i = 0; i < newGridNumberY; ++i) {
+        newGrid[i] = new int[newGridNumberX] {0}; // 0's for new grid
+    }
+    
+
+    // Copy the old grid data to the new grid
+    for (int i = 0; i < gridNumberY; ++i) {
+        for (int j = 0; j < gridNumberX; ++j) {
+            newGrid[i][j] = grid[i][j]; // Copy old data to the new grid
+        }
+    }
+
+    // Clean up the old grid
+    for (int i = 0; i < gridNumberY; ++i) {
+        delete[] grid[i];  // Free each row of the old grid
+    }
+    delete[] grid;  // Free the old grid itself
+
+    // Assign the new grid
+    grid = newGrid;
+
+    // Update grid dimensions
+    setGridSize(newGridNumberX, newGridNumberY);
 }
 
-// Grid boyutlarýný yeniden ayarlar
+// Resizes the grid
 void MAP::setGridSize(int x, int y) {
+    if (x < 0 || y < 0) {
+        std::cerr << "Error: Invalid values." << std::endl;
+        return; // No operation for invalid index
+    }
+    // Clean up the old grid
+    for (int i = 0; i < gridNumberY; ++i) {
+        delete[] grid[i];
+    }
+    delete[] grid;
+
+    // Create the new grid
     gridNumberX = x;
     gridNumberY = y;
-    grid.assign(gridNumberY, std::vector<int>(gridNumberX, 0));
+    grid = new int*[gridNumberY];
+    for (int i = 0; i < gridNumberY; ++i) {
+        grid[i] = new int[gridNumberX]{0};
+    }
 }
