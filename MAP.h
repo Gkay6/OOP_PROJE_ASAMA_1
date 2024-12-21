@@ -1,3 +1,18 @@
+/** 
+ * @file   MAP.h
+ * @author Omer Ozkan
+ * @date   December, 2024
+ * @brief  Header file for the MAP class, which represents a 2D grid map, supporting operations 
+ *         such as adding points, resizing the grid, and visualizing the map.
+ *
+ * This file contains the definition of the MAP class, which is used to create a 2D grid map with specified 
+ * dimensions. The class allows for inserting points into the grid, retrieving and setting values at specific 
+ * grid cells, and resizing the grid. Additionally, it provides methods for clearing the map, printing map 
+ * information, and visually displaying the grid. The map is represented by a 2D array, where grid cells can 
+ * either be empty or filled. This class is useful for applications involving spatial mapping, visualization, 
+ * and grid-based operations.
+ */
+
 #pragma once
 #include <iostream>
 #include "Point.h"
