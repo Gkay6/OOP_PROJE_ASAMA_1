@@ -71,9 +71,14 @@ void test_getSetGrid() {
     std::cout << "After setGrid(2, 2, 1), map:\n";
     myMap.showMap();
     std::cout << "getGrid(2, 2): " << myMap.getGrid(2, 2) << "\n";
-    //hatalı olacak durumlar
-    myMap.setGrid(6, 6, 1);//bu nokta yok
-    myMap.getGrid(-1, -1);//bu negatif
+    std::cout << "getGrid(3, 3): " << myMap.getGrid(3, 3) << "\n";
+    
+    myMap.setGrid(6, 6, 1);
+    std::cout << "getGrid(6,6): " << myMap.getGrid(6, 6) << "\n";
+    myMap.setGrid(-1, -1, 1);//bu nokta negatif
+    std::cout << "getGrid(-1,-1): " << myMap.getGrid(-1, -1) << "\n";//negative
+    myMap.setGrid(50, 50, 1);//this point not in the area
+    myMap.getGrid(100, 100);//this point not in the area
 }
 
 void test_clearMap() {
