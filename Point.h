@@ -1,28 +1,85 @@
 #pragma once
-#include <iostream>  // For console output
-#include <cmath>     // For mathematical calculations
-#include <cassert>   // For error checking (optional)
+#include <iostream>  //! For console output.
+#include <cmath>     //! For mathematical calculations.
+#include <cassert>   //! For error checking (optional).
 
+/**
+ * @class Point
+ * @brief Class representing a point in a 2D coordinate system.
+ *
+ * This class is used to store the coordinates of a point, calculate the distance
+ * and angle to another point, and perform related operations.
+ */
 class Point {
 public:
-    // Member variables
-    double x;
-    double y;
+    double x; //! X coordinate.
+    double y; //! Y coordinate.
 
-    // Constructor: Default and parameterized
+    /*!
+     * @brief Default and parameterized constructor for the Point class.
+     *
+     * @param _x: Initial value of the X coordinate (default: 0.0).
+     * @param _y: Initial value of the Y coordinate (default: 0.0).
+     */
     Point(double _x = 0.0, double _y = 0.0) : x(_x), y(_y) {}
 
-    // Getter and Setter Functions
-    double getX() const;                     // Returns the X coordinate
-    double getY() const;                     // Returns the Y coordinate
-    void setX(double value);                 // Sets the X coordinate
-    void setY(double value);                 // Sets the Y coordinate
-    void setPoint(double _x, double _y);     // Sets both X and Y coordinates
+    /*!
+     * @brief Returns the X coordinate.
+     *
+     * @return X coordinate.
+     */
+    double getX() const;
 
-    // Operations between points
-    double findDistanceToPos(const Point& p) const;  // Calculates the distance to another point
-    double findAngleToPos(const Point& p) const;     // Calculates the angle to another point
+    /*!
+     * @brief Returns the Y coordinate.
+     *
+     * @return Y coordinate.
+     */
+    double getY() const;
 
-    // Operator overloads
-    bool operator==(const Point& p) const;           // Compares equality between points
+    /*!
+     * @brief Sets the X coordinate.
+     *
+     * @param value: New value for the X coordinate.
+     */
+    void setX(double value);
+
+    /*!
+     * @brief Sets the Y coordinate.
+     *
+     * @param value: New value for the Y coordinate.
+     */
+    void setY(double value);
+
+    /*!
+     * @brief Sets both X and Y coordinates.
+     *
+     * @param _x: New value for the X coordinate.
+     * @param _y: New value for the Y coordinate.
+     */
+    void setPoint(double _x, double _y);
+
+    /*!
+     * @brief Calculates the distance to another point.
+     *
+     * @param p: Target point.
+     * @return Distance value.
+     */
+    double findDistanceToPos(const Point& p) const;
+
+    /*!
+     * @brief Calculates the angle to another point.
+     *
+     * @param p: Target point.
+     * @return Angle value (in radians).
+     */
+    double findAngleToPos(const Point& p) const;
+
+    /*!
+     * @brief Checks the equality of two points.
+     *
+     * @param p: Point to compare with.
+     * @return True if the points are equal, otherwise false.
+     */
+    bool operator==(const Point& p) const;
 };
