@@ -2,34 +2,102 @@
 #include <iostream>
 #include "Point.h"
 
+/**
+ * @class MAP
+ * @brief Class representing a 2D grid map.
+ *
+ * This class is used to create a map, add points, and visualize the map.
+ * It also supports operations such as resizing the grid.
+ */
 class MAP {
 private:
-    int gridNumberX; // X eksenindeki grid sayısı
-    int gridNumberY; // Y eksenindeki grid sayısı
-    int room_X;//odanın x verisi
-    int room_Y;//odanın y verisi    
-    int** grid;      // 2D grid (0: boş, 1: dolu)
+    int gridNumberX; //! Number of grids along the X axis.
+    int gridNumberY; //! Number of grids along the Y axis.
+    int room_X;      //! X coordinate of the room.
+    int room_Y;      //! Y coordinate of the room.
+    int** grid;      //! 2D grid (0: empty, 1: filled).
 
 public:
+    /*!
+     * @brief Constructor for the MAP class.
+     *
+     * @param x Number of grids along the X axis (default: 10).
+     * @param y Number of grids along the Y axis (default: 10).
+     * @param roomx X coordinate of the room (default: 0).
+     * @param roomy Y coordinate of the room (default: 0).
+     */
     MAP(int x = 10, int y = 10, int roomx = 0, int roomy = 0);
+
+    //! Destructor.
     ~MAP();
 
-    // Nokta ekleme
+    /*!
+     * @brief Adds a point to the grid.
+     *
+     * @param point The point to be added.
+     */
     void insertPoint(const Point& point);
 
-    // Getter ve Setter
+    /*!
+     * @brief Returns the value at a specific grid cell.
+     *
+     * @param x X coordinate.
+     * @param y Y coordinate.
+     * @return The value at the cell.
+     */
     int getGrid(int x, int y) const;
+
+    /*!
+     * @brief Sets a value at a specific grid cell.
+     *
+     * @param x X coordinate.
+     * @param y Y coordinate.
+     * @param value The value to set.
+     */
     void setGrid(int x, int y, int value);
 
-    // Harita işlemleri
-    void clearMap(); //map temizleme
-    void printInfo() const; // bilgileri döndürme
-    void showMap() const; //map konsola yazdırma
+    /*!
+     * @brief Clears the map.
+     */
+    void clearMap();
 
-    // Grid boyut işlemleri
+    /*!
+     * @brief Prints map information to the console.
+     */
+    void printInfo() const;
+
+    /*!
+     * @brief Displays the map visually in the console.
+     */
+    void showMap() const;
+
+    /*!
+     * @brief Returns the number of grids along the X axis.
+     *
+     * @return Number of grids along the X axis.
+     */
     int getNumberX() const;
+
+    /*!
+     * @brief Returns the number of grids along the Y axis.
+     *
+     * @return Number of grids along the Y axis.
+     */
     int getNumberY() const;
 
-    void addGridSize(int x, int y); // grid büyütme
-    void setGridSize(int x, int y); // grid boyutunu güncelleme
+    /*!
+     * @brief Expands the grid size.
+     *
+     * @param x Additional size for the X axis.
+     * @param y Additional size for the Y axis.
+     */
+    void addGridSize(int x, int y);
+
+    /*!
+     * @brief Updates the grid size.
+     *
+     * @param x New size for the X axis.
+     * @param y New size for the Y axis.
+     */
+    void setGridSize(int x, int y);
 };
