@@ -1,20 +1,20 @@
 #include "Menu.h"
 
-FestoRobotAPI* robotAPI;
-LidarSensor* lidar_sensor;
-IRSensor* ir_sensor;
-RobotController* robot_controller;
-SafeNavigation* safe_navigation;
-
 
 Menu::Menu(FestoRobotAPI* robotAPI) :
-	robotAPI(robotAPI), 
-	lidar_sensor(robotAPI),
-	ir_sensor(robotAPI),
-	robot_controller(robotAPI),
-	safe_navigation(&robot_controller, &ir_sensor) {
+	robotAPI(robotAPI){
+	
+	is_robot_connected = false;
+	robot_controller = new RobotController(robotAPI);
 
 	Main_Menu();
+}
+
+void Menu::create_objects() {
+	ir_sensor = new IRSensor(robotAPI);
+	lidar_sensor = new LidarSensor(robotAPI);
+	safe_navigation = new SafeNavigation(robot_controller, ir_sensor);
+	mapper = new Mapper(robot_controller, *lidar_sensor);
 }
 
 
@@ -26,15 +26,24 @@ void Menu::Main_Menu() {
 		int choice = 0;
 		std::cout << menu_text << "Choose one: ";
 		std::cin >> choice;
+		
 
 		switch (choice) {
 		case 1:
 			Connection_Menu();
 			break;
 		case 2:
+			if (!is_robot_connected) {
+				std::cout << "Can't use other menus before connecting to the robot\n\n";
+				break;
+			}
 			Motion_Menu();
 			break;
 		case 3:
+			if (!is_robot_connected) {
+				std::cout << "Can't use other menus before connecting to the robot\n\n";
+				break;
+			}
 			Sensor_Menu();
 			break;
 		case 4:
@@ -60,11 +69,14 @@ void Menu::Connection_Menu() {
 		switch (choice) {
 		case 1:
 			std::cout << "<Connect>\n";
-			robot_controller.connectRobot();
+			if (robot_controller->connectRobot()) {
+				is_robot_connected = true;
+			}
+			create_objects();
 			break;
 		case 2:
 			std::cout << "<Disconnect>\n";
-			robot_controller.disconnectRobot();
+			robot_controller->disconnectRobot();
 			break;
 		case 3:
 			std::cout << "Back\n";
@@ -80,7 +92,7 @@ void Menu::Connection_Menu() {
 
 
 void Menu::Motion_Menu() {
-	std::string menu_text = "Motion Menu\n0. Stop\n1. Move Left\n2. Move Backward\n3. Move Left\n"
+	std::string menu_text = "Motion Menu\n0. Stop\n1. Move Left\n2. Move Backward\n3. Move Right\n"
 		"4. Turn Left\n5. Move Forward\n6. Turn Right\n7. Move Forward Safe\n8. Move Backward Safe\n9. Back\n";
 
 
@@ -97,34 +109,37 @@ void Menu::Motion_Menu() {
 
 		switch (choice) {
 		case 0:
-			robot_controller.stop();
+			robot_controller->stop();
+			Sleep(100);
+			mapper->updateMap();
+			//mapper->showMap();
 			break;
 		case 1:
-			robot_controller.moveLeft();
+			robot_controller->moveLeft();
 			break;
 		case 2:
-			robot_controller.moveBackward();
+			robot_controller->moveBackward();
 			break;
 		case 3:
-			robot_controller.moveRight();
+			robot_controller->moveRight();
 			break;
 		case 4:
-			robot_controller.turnLeft();
+			robot_controller->turnLeft();
 			break;
 		case 5:
-			robot_controller.moveForward();
+			robot_controller->moveForward();
 			break;
 		case 6:
-			robot_controller.turnRight();
+			robot_controller->turnRight();
 			break;
 		case 7:
-			safe_navigation.moveForwardSafe();
+			safe_navigation->moveForwardSafe();
 			break;
 		case 8:
-			safe_navigation.moveBackwardSafe();
+			safe_navigation->moveBackwardSafe();
 			break;
 		case 9:
-			robot_controller.stop();
+			robot_controller->stop();
 			std::cout << "Back\n";
 			loop = false;
 			break;
@@ -137,7 +152,8 @@ void Menu::Motion_Menu() {
 
 
 void Menu::Sensor_Menu() {
-	std::string menu_text = "Sensor Menu\n1. Print IR sensor\n2. Update IR Sensor\n3. Back\n";
+	std::string menu_text = "Sensor Menu\n1. Print IR sensor\n2. Update IR Sensor\n3. Update map\n"
+		"4. Show Map\n5. Back\n";
 
 	bool loop = true;
 	while (loop) {
@@ -148,13 +164,20 @@ void Menu::Sensor_Menu() {
 		switch (choice) {
 		case 1:
 			for (int i = 0; i < 9; i++) {
-				std::cout << "IR Sensor " << i << " : " << ir_sensor.getRange(i) << "\n";
+				std::cout << "IR Sensor " << i << " : " << ir_sensor->getRange(i) << "\n";
 			}
 			break;
 		case 2:
-			ir_sensor.update();
+			ir_sensor->update();
 			break;
 		case 3:
+			mapper->updateMap();
+			break;
+		case 4:
+			//mapper.recordMap();
+			mapper->showMap();
+			break;
+		case 5:
 			std::cout << "Back\n";
 			loop = false;
 			break;
@@ -167,5 +190,9 @@ void Menu::Sensor_Menu() {
 
 void Menu::Quit() {
 	// Quit
-	// this->~Menu();
+	delete ir_sensor;
+	delete robot_controller;
+	delete lidar_sensor;
+	delete safe_navigation;
+	delete mapper;
 }

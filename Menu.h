@@ -4,6 +4,7 @@
 #include "Encryption.h"
 #include "LidarSensor.h"
 #include "IRSensor.h"
+#include "Mapper.h"
 #include "RobotController.h"
 #include "SafeNavigation.h"
 #include <string>
@@ -13,10 +14,13 @@ class Menu
 {
 private:
 	FestoRobotAPI* robotAPI;
-	LidarSensor lidar_sensor;
-	IRSensor ir_sensor;
-	RobotController robot_controller;
-	SafeNavigation safe_navigation;
+	IRSensor* ir_sensor = nullptr;
+	RobotController* robot_controller = nullptr;
+	LidarSensor* lidar_sensor = nullptr;
+	SafeNavigation* safe_navigation = nullptr;
+	Mapper* mapper = nullptr;
+	bool is_robot_connected;
+	void create_objects();
 public:
 	Menu(FestoRobotAPI* robotAPI);
 	void Main_Menu();
