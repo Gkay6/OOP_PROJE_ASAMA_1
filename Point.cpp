@@ -1,3 +1,17 @@
+/** 
+ * @file   Point.cpp
+ * @author Omer Ozkan
+ * @date   December, 2024
+ * @brief  Implementation of the Point class that represents a point in a 2D Cartesian coordinate system 
+ * and provides various operations such as calculating the distance, angle, and comparison between points.
+ *
+ * This file contains the implementation of the Point class, which is used to represent a point in a two-dimensional
+ * Cartesian coordinate system. The class includes methods for getting and setting the coordinates, calculating the 
+ * distance to another point, determining the angle between two points, and checking equality between two points. 
+ * It also provides functionality to modify both coordinates simultaneously. The class is designed to perform basic 
+ * geometric operations and comparisons, making it useful for applications requiring point manipulation in 2D space.
+ */
+
 #include "Point.h"
 
 /*!
