@@ -1,10 +1,22 @@
-﻿#include "RobotController.h"
+﻿/*!
+ * \file RobotController.cpp
+ * \author Sefa Çelenk
+ * \date 20.12.2024
+ * \brief Implementation file for the RobotController class, which manages robot control and state using the FestoRobotAPI.
+ */
+
+#include "RobotController.h"
 #include "FestoRobotAPI.h"
 #include "Pose.h"
 #include <iostream>
-#include <windows.h> // Sleep i�in
+#include <windows.h> // For Sleep function
 
 // Constructor
+/*!
+ * \brief Initializes the RobotController with a FestoRobotAPI object.
+ * \param api Pointer to an instance of FestoRobotAPI.
+ * \throws std::invalid_argument if the API object is null.
+ */
 RobotController::RobotController(FestoRobotAPI* api)
     : position(new Pose()), robotAPI(api), connectionStatus(false) {
     if (!robotAPI) {
@@ -13,6 +25,9 @@ RobotController::RobotController(FestoRobotAPI* api)
 }
 
 // Destructor
+/*!
+ * \brief Cleans up resources and disconnects the robot if necessary.
+ */
 RobotController::~RobotController() {
     if (robotAPI) {
         robotAPI->disconnect();
@@ -22,47 +37,68 @@ RobotController::~RobotController() {
     std::cout << "RobotController destroyed.\n";
 }
 
-// Robot Kontrol Fonksiyonlar�
+// Robot Control Functions
+/*!
+ * \brief Commands the robot to turn left.
+ */
 void RobotController::turnLeft() {
     std::cout << "Robot turning left...\n";
     robotAPI->rotate(LEFT);
 }
 
+/*!
+ * \brief Commands the robot to turn right.
+ */
 void RobotController::turnRight() {
     std::cout << "Robot turning right...\n";
     robotAPI->rotate(RIGHT);
-
 }
 
+/*!
+ * \brief Commands the robot to move forward.
+ */
 void RobotController::moveForward() {
     std::cout << "Robot moving forward...\n";
     robotAPI->move(FORWARD);
-
 }
 
+/*!
+ * \brief Commands the robot to move backward.
+ */
 void RobotController::moveBackward() {
     std::cout << "Robot moving backward...\n";
     robotAPI->move(BACKWARD);
-
 }
 
+/*!
+ * \brief Commands the robot to move left sideways.
+ */
 void RobotController::moveLeft() {
     std::cout << "Robot moving left sideways...\n";
     robotAPI->move(LEFT);
-
 }
 
+/*!
+ * \brief Commands the robot to move right sideways.
+ */
 void RobotController::moveRight() {
     std::cout << "Robot moving right sideways...\n";
     robotAPI->move(RIGHT);
 }
 
+/*!
+ * \brief Commands the robot to stop moving.
+ */
 void RobotController::stop() {
     std::cout << "Robot stopping...\n";
     robotAPI->stop();
 }
 
-// Bilgi Fonksiyonlar�
+// Information Functions
+/*!
+ * \brief Retrieves the current pose of the robot.
+ * \return A Pose object representing the robot's current position and orientation.
+ */
 Pose RobotController::getPose() const {
     double x, y, th;
     robotAPI->getXYTh(x, y, th);
@@ -70,61 +106,29 @@ Pose RobotController::getPose() const {
     return *position;
 }
 
+/*!
+ * \brief Prints the current state of the robot to the console.
+ */
 void RobotController::print() const {
-    /*
-    double x, y, th;
-    robotAPI->getXYTh(x, y, th);
-
-    // Pose bilgilerini yazd�r
-    std::cout << "-------------------- SENSOR VALUES --------------------\n";
-    std::cout << "POSE         : (X) " << x << " meters, "
-        << "(Y) " << y << " meters, "
-        << "(Th) " << (th * 180) / 3.14 << " degrees\n\n";
-
-    // IR Sens�r de�erlerini yazd�r
-    double ir[9];
-    for (int i = 0; i < 9; i++)
-        ir[i] = robotAPI->getIRRange(i);
-
-    std::cout << "IR RANGES : \n";
-    std::cout << "       FRONT           \n";
-    std::cout << "        " << ir[0] << "           \n";
-    std::cout << "    " << ir[1] << "     " << ir[8] << "      \n";
-    std::cout << "    " << ir[2] << "     " << ir[7] << "      \n";
-    std::cout << "    " << ir[3] << "     " << ir[6] << "      \n";
-    std::cout << "    " << ir[4] << "     " << ir[5] << "      \n";
-    std::cout << "------------------------------------------------------\n";
-
-    // Lidar de�erlerini yazd�r
-    int number = robotAPI->getLidarRangeNumber();
-    float* ranges = new float[number];
-    robotAPI->getLidarRange(ranges);
-
-    std::cout << "-------------------- LIDAR VALUES (in meters) --------------------\n";
-    for (int i = 0; i < number; i++) {
-        std::cout << i << " -> " << ranges[i] << "\n";
-    }
-    std::cout << "------------------------------------------------------\n";
-
-    delete[] ranges;
-    */
     std::cout << "-------------------- SENSOR VALUES --------------------\n";
     std::cout << "POSE         : (X) " << this->getPose().getX() << " meters, "
-        << "(Y) " << this->getPose().getY() << " meters, "
-        << "(Th) " << (this->getPose().getTh() * 180) / 3.14 << " degrees\n\n";
+              << "(Y) " << this->getPose().getY() << " meters, "
+              << "(Th) " << (this->getPose().getTh() * 180) / 3.14 << " degrees\n\n";
 }
 
-// Ba�lant� Fonksiyonlar�
+// Connection Functions
+/*!
+ * \brief Connects the robot to the API.
+ * \return True if the connection is successful, false otherwise.
+ */
 bool RobotController::connectRobot() {
     if (!connectionStatus) {
         robotAPI->connect();
         Sleep(2000);
         connectionStatus = true;
-        //
         double x = 0, y = 0, th = 0;
         robotAPI->getXYTh(x, y, th);
         position->setPose(x, y, th);
-        //
         std::cout << "Robot connected successfully.\n";
         return true;
     }
@@ -132,6 +136,10 @@ bool RobotController::connectRobot() {
     return false;
 }
 
+/*!
+ * \brief Disconnects the robot from the API.
+ * \return True if the disconnection is successful, false otherwise.
+ */
 bool RobotController::disconnectRobot() {
     if (connectionStatus) {
         robotAPI->disconnect();

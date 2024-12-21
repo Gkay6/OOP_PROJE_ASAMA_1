@@ -1,76 +1,76 @@
+/*!
+ * \file RobotControllerTest.cpp
+ * \author Sefa Çelenk
+ * \date 20.12.2024
+ * \brief Test file for the RobotController class. Contains a test function to verify robot movements and pose updates.
+ */
+
 #include "RobotController.h"
 #include <iostream>
-#include <windows.h> // Sleep i�in
+#include <windows.h> // For Sleep function
 
+/*!
+ * \brief Prints a separator line for better test output readability.
+ */
 void printSeparator() {
     std::cout << "-----------------------------\n";
 }
 
+/*!
+ * \brief Test function for the RobotController class. Verifies robot movements and pose updates.
+ * \param robotino Reference to an instance of RobotController.
+ */
 void RobotControllerTest(RobotController& robotino) {
-
-    // Robota ba�lan
-    /*
-    if (robot.connectRobot()) {
-        std::cout << "Robot successfully connected.\n";
-    }
-    else {
-        std::cout << "Failed to connect to the robot.\n";
-        return;
-    }
-    */
-    std::cout << "RobotControllerTest-start" << std::endl;
+    std::cout << "RobotControllerTest-start\n";
     printSeparator();
+
     std::cout << "Initial Pose:\n";
-    robotino.print();  // �lk pozisyonu yazd�r
+    robotino.print(); // Print the initial position
     printSeparator();
 
-    // 1. �leri ve Geri Hareket Testi
+    // 1. Forward and Backward Movement Test
     std::cout << "Test 1: Move Forward and Backward\n";
     robotino.moveForward();
-    Sleep(2000);  // 2 saniye ileri hareket et
+    Sleep(2000); // Move forward for 2 seconds
     robotino.stop();
     robotino.print();
 
     robotino.moveBackward();
-    Sleep(2000);  // 2 saniye geri hareket et
+    Sleep(2000); // Move backward for 2 seconds
     robotino.stop();
     robotino.print();
-
     printSeparator();
 
-    // 2. Sa�a ve Sola D�n�� Testi
+    // 2. Left and Right Turn Test
     std::cout << "Test 2: Turn Left and Turn Right\n";
     robotino.turnLeft();
-    Sleep(1000);  // 1 saniye sola d�n
+    Sleep(1000); // Turn left for 1 second
     robotino.stop();
     robotino.print();
 
     robotino.turnRight();
-    Sleep(1000);  // 1 saniye sa�a d�n
+    Sleep(1000); // Turn right for 1 second
     robotino.stop();
     robotino.print();
-
     printSeparator();
 
-    // 3. Sa�a ve Sola Yana Hareket Testi
+    // 3. Left and Right Sideways Movement Test
     std::cout << "Test 3: Move Left and Move Right (sideways)\n";
     robotino.moveLeft();
     std::cout << "Robot moving left...\n";
-    Sleep(2000);  // 2 saniye sola hareket et
+    Sleep(2000); // Move left sideways for 2 seconds
     robotino.stop();
     robotino.print();
 
     robotino.moveRight();
     std::cout << "Robot moving right...\n";
-    Sleep(2000);  // 2 saniye sa�a hareket et
+    Sleep(2000); // Move right sideways for 2 seconds
     robotino.stop();
     robotino.print();
-
     printSeparator();
 
-    // 4. Karma��k Hareket Kombinasyonu Testi
+    // 4. Complex Movement Combination Test
     std::cout << "Test 4: Complex Movement\n";
-
     robotino.moveForward();
     std::cout << "Moving forward...\n";
     Sleep(2000);
@@ -100,10 +100,7 @@ void RobotControllerTest(RobotController& robotino) {
     Sleep(2000);
     robotino.stop();
     robotino.print();
-
     printSeparator();
-    std::cout << "RobotControllerTest-end" << std::endl;
-    // Robot ba�lant�s�n� kes
-    //robot.disconnectRobot();
-    //std::cout << "Robot disconnected successfully.\n";
+
+    std::cout << "RobotControllerTest-end\n";
 }
