@@ -1,21 +1,27 @@
 #include "MAP.h"
 #include <iostream>
 
-// Constructor: Sets grid dimensions and initializes all grid elements to 0
-
-MAP::MAP(int x, int y, int roomx, int roomy ) : gridNumberX(x), gridNumberY(y), room_X(roomx), room_Y(roomy){
+/*!
+ * @brief Constructor: Sets the grid dimensions and initializes all grid elements to 0.
+ *
+ * @param x Number of cells in the X axis of the grid.
+ * @param y Number of cells in the Y axis of the grid.
+ * @param roomx X coordinate of the starting room.
+ * @param roomy Y coordinate of the starting room.
+ */
+MAP::MAP(int x, int y, int roomx, int roomy) : gridNumberX(x), gridNumberY(y), room_X(roomx), room_Y(roomy) {
     grid = new int* [gridNumberY];
     for (int i = 0; i < gridNumberY; ++i) {
         grid[i] = new int[gridNumberX];
-        // Initialize all elements in each row to zero
         for (int j = 0; j < gridNumberX; ++j) {
             grid[i][j] = 0;
         }
     }
 }
 
-
-// Destructor: Cleans up dynamic memory
+/*!
+ * @brief Destructor: Frees dynamically allocated memory.
+ */
 MAP::~MAP() {
     for (int i = 0; i < gridNumberY; ++i) {
         delete[] grid[i];
@@ -23,12 +29,16 @@ MAP::~MAP() {
     delete[] grid;
 }
 
-// Assigns a value of 1 to the point's coordinates on the grid
+/*!
+ * @brief Adds a point's coordinates to the grid.
+ *
+ * @param point The point to be added.
+ */
 void MAP::insertPoint(const Point& point) {
     int gridX = point.getX() - room_X;
     int gridY = point.getY() - room_Y;
 
-    std::cout << "at that coordinate :"<< gridX << "," << gridY << "\n";
+    std::cout << "At that coordinate: " << gridX << "," << gridY << "\n";
 
     if (gridX >= 0 && gridX < gridNumberX && gridY >= 0 && gridY < gridNumberY) {
         grid[gridY][gridX] = 1;
@@ -38,7 +48,13 @@ void MAP::insertPoint(const Point& point) {
     }
 }
 
-// Returns the value at the given grid coordinates
+/*!
+ * @brief Returns the grid value at the specified coordinates.
+ *
+ * @param x X axis coordinate.
+ * @param y Y axis coordinate.
+ * @return The grid value; returns -1 for invalid coordinates.
+ */
 int MAP::getGrid(int x, int y) const {
     int adjustedX = x - room_X;
     int adjustedY = y - room_Y;
@@ -50,8 +66,13 @@ int MAP::getGrid(int x, int y) const {
     return grid[adjustedY][adjustedX];
 }
 
-
-// Sets a value at the specified grid index: for example, setting (2, 2) to 1
+/*!
+ * @brief Sets a value at the specified grid cell.
+ *
+ * @param x X axis coordinate.
+ * @param y Y axis coordinate.
+ * @param value The value to be set.
+ */
 void MAP::setGrid(int x, int y, int value) {
     int adjustedX = x - room_X;
     int adjustedY = y - room_Y;
@@ -63,96 +84,111 @@ void MAP::setGrid(int x, int y, int value) {
     grid[adjustedY][adjustedX] = value;
 }
 
-
-// Resets all grids to zero
+/*!
+ * @brief Resets all grid cells to zero.
+ */
 void MAP::clearMap() {
     for (int i = 0; i < gridNumberY; ++i) {
         for (int j = 0; j < gridNumberX; ++j) {
-            grid[i][j] = 0; // Correct access
+            grid[i][j] = 0;
         }
     }
 }
 
-// Prints grid information
+/*!
+ * @brief Prints grid information.
+ */
 void MAP::printInfo() const {
     std::cout << "Grid Size: " << gridNumberX << " x " << gridNumberY << "\n";
     std::cout << "Total Grid Number: " << gridNumberX * gridNumberY << "\n";
 }
 
-// Prints the grid to the console
+/*!
+ * @brief Displays the grid.
+ */
 void MAP::showMap() const {
     for (int i = 0; i < gridNumberY; ++i) {
         for (int j = 0; j < gridNumberX; ++j) {
-            std::cout << (grid[i][j] == 0 ? "." : "x") << " "; // Doğru erişim
+            std::cout << (grid[i][j] == 0 ? "." : "x") << " ";
         }
         std::cout << "\n";
     }
 }
 
-// Returns the number of grids along the X axis
+/*!
+ * @brief Returns the number of cells in the X axis of the grid.
+ *
+ * @return Number of cells in the X axis.
+ */
 int MAP::getNumberX() const {
     return gridNumberX;
 }
 
-// Returns the number of grids along the Y axis
+/*!
+ * @brief Returns the number of cells in the Y axis of the grid.
+ *
+ * @return Number of cells in the Y axis.
+ */
 int MAP::getNumberY() const {
     return gridNumberY;
 }
-void MAP::addGridSize(int x, int y) {
-    if (x < 0 || y < 0 ) {
-        std::cerr << "Error: Invalid values." << std::endl;
-        return; // No operation for invalid index
-    }
-    // Get the current grid dimensions
 
-    // Calculate the new grid dimensions
+/*!
+ * @brief Increases the grid size.
+ *
+ * @param x Number of cells to be added in the X axis.
+ * @param y Number of cells to be added in the Y axis.
+ */
+void MAP::addGridSize(int x, int y) {
+    if (x < 0 || y < 0) {
+        std::cerr << "Error: Invalid values." << std::endl;
+        return;
+    }
+
     int newGridNumberX = gridNumberX + x;
     int newGridNumberY = gridNumberY + y;
 
-    // Allocate memory for the new grid
     int** newGrid = new int* [newGridNumberY];
     for (int i = 0; i < newGridNumberY; ++i) {
-        newGrid[i] = new int[newGridNumberX] {0}; // 0's for new grid
+        newGrid[i] = new int[newGridNumberX] {0};
     }
-    
 
-    // Copy the old grid data to the new grid
     for (int i = 0; i < gridNumberY; ++i) {
         for (int j = 0; j < gridNumberX; ++j) {
-            newGrid[i][j] = grid[i][j]; // Copy old data to the new grid
+            newGrid[i][j] = grid[i][j];
         }
     }
 
-    // Clean up the old grid
-    for (int i = 0; i < gridNumberY; ++i) {
-        delete[] grid[i];  // Free each row of the old grid
-    }
-    delete[] grid;  // Free the old grid itself
-
-    // Assign the new grid
-    grid = newGrid;
-
-    // Update grid dimensions
-    setGridSize(newGridNumberX, newGridNumberY);
-}
-
-// Resizes the grid
-void MAP::setGridSize(int x, int y) {
-    if (x < 0 || y < 0) {
-        std::cerr << "Error: Invalid values." << std::endl;
-        return; // No operation for invalid index
-    }
-    // Clean up the old grid
     for (int i = 0; i < gridNumberY; ++i) {
         delete[] grid[i];
     }
     delete[] grid;
 
-    // Create the new grid
+    grid = newGrid;
+    setGridSize(newGridNumberX, newGridNumberY);
+}
+
+/*!
+ * @brief Resizes the grid.
+ *
+ * @param x New number of cells in the X axis.
+ * @param y New number of cells in the Y axis.
+ */
+void MAP::setGridSize(int x, int y) {
+    if (x < 0 || y < 0) {
+        std::cerr << "Error: Invalid values." << std::endl;
+        return;
+    }
+
+    for (int i = 0; i < gridNumberY; ++i) {
+        delete[] grid[i];
+    }
+    delete[] grid;
+
     gridNumberX = x;
     gridNumberY = y;
-    grid = new int*[gridNumberY];
+    grid = new int* [gridNumberY];
     for (int i = 0; i < gridNumberY; ++i) {
-        grid[i] = new int[gridNumberX]{0};
+        grid[i] = new int[gridNumberX] {0};
     }
 }
