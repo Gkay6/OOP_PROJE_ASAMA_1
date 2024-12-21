@@ -22,7 +22,15 @@ int LidarSensor::getRangeNumber() const
 
 double LidarSensor::getRange(int index) const
 {
-	return this->ranges[index];
+	if (index < this->rangeNumber)
+	{
+		return this->ranges[index];
+	}
+	else
+	{
+		std::cerr << "LidarSensor::getRange(int) error, out of boundaries! " << std::endl;
+		exit(0);
+	}
 }
 
 double LidarSensor::getMax(int& index) const
