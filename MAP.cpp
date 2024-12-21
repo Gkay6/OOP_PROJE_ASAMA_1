@@ -1,3 +1,16 @@
+/** 
+ * @file   MAP.cpp
+ * @author Omer Ozkan
+ * @date   December, 2024
+ * @brief  Source file for the MAP class, which represents a 2D grid map with various grid operations such as adding points, resizing, and visualizing the map.
+ *
+ * This file contains the implementation of the MAP class, which allows for the creation and manipulation 
+ * of a 2D grid. The class supports operations such as adding points to the grid, resizing the grid, 
+ * and displaying it visually. The grid is represented by a 2D array, where each cell can store a value 
+ * to represent the state of that cell (e.g., empty or filled). The class provides functionalities for 
+ * adjusting the grid's dimensions, resetting the map, and querying the state of specific grid cells.
+ */
+
 #include "MAP.h"
 #include <iostream>
 
