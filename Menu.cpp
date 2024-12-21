@@ -10,6 +10,7 @@ Menu::Menu(FestoRobotAPI* robotAPI) :
 	Main_Menu();
 }
 
+
 void Menu::create_objects() {
 	ir_sensor = new IRSensor(robotAPI);
 	lidar_sensor = new LidarSensor(robotAPI);
@@ -23,10 +24,11 @@ void Menu::Main_Menu() {
 
 	bool loop = true;
 	while (loop) {
+		
 		int choice = 0;
 		std::cout << menu_text << "Choose one: ";
 		std::cin >> choice;
-		
+		std::cout << "\n";
 
 		switch (choice) {
 		case 1:
@@ -62,9 +64,11 @@ void Menu::Connection_Menu() {
 
 	bool loop = true;
 	while (loop) {
+
 		int choice = 0;
 		std::cout << menu_text << "Choose one: ";
 		std::cin >> choice;
+		std::cout << "\n";
 
 		switch (choice) {
 		case 1:
@@ -96,23 +100,22 @@ void Menu::Motion_Menu() {
 		"4. Turn Left\n5. Move Forward\n6. Turn Right\n7. Move Forward Safe\n8. Move Backward Safe\n9. Back\n";
 
 
-	//std::string menu_text = 
-	//	"7. Move Forward Safe  8. Move Backward Safe  9. Back\n"
-	//	"4. Turn Left          5. Move Forward        6. Turn Right\n"
-	//	"1. Move Left          2. Move Backward       3. Move Right\n";
+	//	"7. Move Forward Safe  8. Move Backward Safe  9. Back"
+	//	"4. Turn Left          5. Move Forward        6. Turn Right"
+	//	"1. Move Left          2. Move Backward       3. Move Right";
+	//  "0. Stop"
 
 	bool loop = true;
 	while (loop) {
+
 		int choice = 0;
 		std::cout << menu_text << "Choose one: ";
 		std::cin >> choice;
+		std::cout << "\n";
 
 		switch (choice) {
 		case 0:
 			robot_controller->stop();
-			Sleep(100);
-			mapper->updateMap();
-			//mapper->showMap();
 			break;
 		case 1:
 			robot_controller->moveLeft();
@@ -143,6 +146,8 @@ void Menu::Motion_Menu() {
 			std::cout << "Back\n";
 			loop = false;
 			break;
+		case 10:
+			mapper->updateMap();
 		default:
 			std::cout << "Invalid option, enter again\n\n";
 		}
@@ -152,14 +157,16 @@ void Menu::Motion_Menu() {
 
 
 void Menu::Sensor_Menu() {
-	std::string menu_text = "Sensor Menu\n1. Print IR sensor\n2. Update IR Sensor\n3. Update map\n"
-		"4. Show Map\n5. Back\n";
+	std::string menu_text = "Sensor Menu\n1. Print IR sensor\n2. Print Lidar sensor\n3. Show Map\n"
+		"4. Update IR Sensor\n5. Update lidar Sensor\n6. Update Map\n7. Record map\n8. Back\n";
 
 	bool loop = true;
 	while (loop) {
+
 		int choice = 0;
 		std::cout << menu_text << "Choose one: ";
 		std::cin >> choice;
+		std::cout << "\n";
 
 		switch (choice) {
 		case 1:
@@ -168,16 +175,26 @@ void Menu::Sensor_Menu() {
 			}
 			break;
 		case 2:
-			ir_sensor->update();
+			for (int i = 0; i < 667; i++) {
+				std::cout << "Lidar Sensor " << i << " : " << lidar_sensor->getRange(i) << "\n";
+			}
 			break;
 		case 3:
-			mapper->updateMap();
-			break;
-		case 4:
-			//mapper.recordMap();
 			mapper->showMap();
 			break;
+		case 4:
+			ir_sensor->update();
+			break;
 		case 5:
+			lidar_sensor->update();
+			break;
+		case 6:
+			mapper->updateMap();
+			break;
+		case 7:
+			mapper->recordMap();
+			break;
+		case 8:
 			std::cout << "Back\n";
 			loop = false;
 			break;
