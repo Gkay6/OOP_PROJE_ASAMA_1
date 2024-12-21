@@ -1,3 +1,15 @@
+/** 
+ * @file   Point.h
+ * @author Omer Ozkan
+ * @date   December, 2024
+ * @brief  Header file for the Point class that represents a point in a 2D Cartesian coordinate system and provides various operations such as distance and angle calculations.
+ *
+ * This file contains the definition of the Point class, which represents a point in a two-dimensional
+ * Cartesian coordinate system. It includes functions for retrieving and modifying the point's coordinates,
+ * as well as performing geometric operations like calculating the distance and angle to other points. 
+ * The class provides constructors for initialization and overloaded operators for comparing points.
+ */
+
 #pragma once
 #include <iostream>  //! For console output.
 #include <cmath>     //! For mathematical calculations.
