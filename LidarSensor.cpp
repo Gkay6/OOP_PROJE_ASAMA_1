@@ -1,5 +1,5 @@
 #include "LidarSensor.h"
-#define degree_diff 0.3598200899550225
+#define degree_diff 0.3603603603603604
 #include <iostream>
 LidarSensor::LidarSensor(FestoRobotAPI* _robotAPI)
 	:robotAPI(_robotAPI)
@@ -13,6 +13,11 @@ LidarSensor::LidarSensor(FestoRobotAPI* _robotAPI)
 		this->ranges[i] = (double)temp_ranges[i];
 	}
 	delete[] temp_ranges;
+}
+
+int LidarSensor::getRangeNumber() const
+{
+	return this->rangeNumber;
 }
 
 double LidarSensor::getRange(int index) const
@@ -94,3 +99,4 @@ LidarSensor::~LidarSensor()
 	delete[] this->ranges;
 	std::cout << "~LidarSensor end" << std::endl;
 }
+

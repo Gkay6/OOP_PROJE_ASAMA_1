@@ -6,10 +6,11 @@ class LidarSensor
 {
 private:
 	double* ranges;
-	FestoRobotAPI* robotAPI;
+	FestoRobotAPI* robotAPI;	
 	int rangeNumber;
-public:
+public:	
 	LidarSensor(FestoRobotAPI* _robotAPI);
+	int getRangeNumber() const;
 	double getRange(int index) const;
 	double getMax(int& index) const;
 	double getMin(int& index) const;

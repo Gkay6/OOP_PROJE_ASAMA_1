@@ -175,7 +175,7 @@ void Menu::Sensor_Menu() {
 			}
 			break;
 		case 2:
-			for (int i = 0; i < 667; i++) {
+			for (int i = 0; i < lidar_sensor->getRangeNumber(); i++) {
 				std::cout << "Lidar Sensor " << i << " : " << lidar_sensor->getRange(i) << "\n";
 			}
 			break;

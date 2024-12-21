@@ -3,18 +3,18 @@
 #define SCALE 4
 Mapper::Mapper(RobotController* controller, LidarSensor& lidar)
 	:map((int)(16 * SCALE), (int)(16 * SCALE), (int)(-7.5 * SCALE), (int)(-7.5 * SCALE)), controller(controller), lidar(lidar)
-{//:map(16, 16, -8, -8)
+{
 }
 
 void Mapper::updateMap()
 {
 	Pose current_location = controller->getPose();
+	lidar.update();
 	//current_location.getX()		x0
 	//current_location.getY()		y0
 	//current_location.getTh()		alpha (radyan)
-	//667 sayisini nerden alacagini bul 
 	std::cout << current_location.getTh() << std::endl;
-	for (int i = 0; i < 667; i++)
+	for (int i = 0; i < lidar.getRangeNumber(); i++)
 	{
 		const double d = lidar[i];
 		if (d != INFINITE && -d != INFINITE)

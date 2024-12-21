@@ -1,5 +1,9 @@
 #ifndef MAPPER_H
 #define MAPPER_H
+#ifndef M_PI
+#define M_PI 3.14159265358979323846 //!< Define PI if not already defined.
+#endif
+
 #include "LidarSensor.h"
 #include "RobotController.h"
 #include "MAP.h"
