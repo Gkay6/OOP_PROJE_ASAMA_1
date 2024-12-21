@@ -3,15 +3,17 @@
 #include "LidarSensor.h"
 #include "RobotController.h"
 #include "MAP.h"
+#include "Record.h"
 
 class Mapper
 {
 private:
-	MAP &map;
+	
 	RobotController* controller;
-	LidarSensor lidar;
+	LidarSensor& lidar;
 public:
-	Mapper(MAP& map, RobotController* controller, LidarSensor lidar);
+	MAP map;
+	Mapper(RobotController* controller, LidarSensor& lidar);
 	void updateMap();
 	bool recordMap();
 	void showMap();
