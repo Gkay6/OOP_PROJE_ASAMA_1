@@ -1,10 +1,18 @@
 #include "LidarSensor.h"
+#define degree_diff 0.3598200899550225
 #include <iostream>
 LidarSensor::LidarSensor(FestoRobotAPI* _robotAPI)
 	:robotAPI(_robotAPI)
 {
 	this->rangeNumber = this->robotAPI->getLidarRangeNumber();
 	this->ranges = new double[this->rangeNumber];
+	float* temp_ranges = new float[this->rangeNumber];
+	this->robotAPI->getLidarRange(temp_ranges);
+	for (int i = 0; i < this->rangeNumber; i++)
+	{
+		this->ranges[i] = (double)temp_ranges[i];
+	}
+	delete[] temp_ranges;
 }
 
 double LidarSensor::getRange(int index) const
@@ -56,16 +64,15 @@ void LidarSensor::update() const
 	delete[] temp_ranges;
 	for (int i = 0; i < this->rangeNumber; i++) 
 	{
-		std::cout << i << "-> ";
-		std::cout << this->getRange(i) << endl;
+		std::cout << i << "-> " << this->getRange(i) << " " << this->getAngle(i) << " degrees" << std::endl;
 	}
 	
-	std::cout << "----------------------------------------------------------------------" << endl;
+ 	std::cout << "----------------------------------------------------------------------" << endl;
 }
 
 double& LidarSensor::operator[](int index)
 {
-	if (index < this->robotAPI->getLidarRangeNumber())
+	if (index < this->rangeNumber)
 	{
 		return this->ranges[index];
 	}
@@ -78,7 +85,7 @@ double& LidarSensor::operator[](int index)
 
 double LidarSensor::getAngle(int i) const
 {
-	return 120 - 0.36 * i;
+	return 120 - degree_diff * i;
 }
 
 LidarSensor::~LidarSensor()
