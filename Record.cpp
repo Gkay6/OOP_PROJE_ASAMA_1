@@ -83,7 +83,7 @@ std::string Record::readLine() {
  */
 bool Record::writeLine(const std::string& str) {
     if (file.is_open()) {
-        file << str << std::endl;
+        file << str;
         return true;
     }
     return false;
