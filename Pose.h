@@ -16,6 +16,16 @@
 #include <cmath> //!< For mathematical functions like sqrt and atan2.
 #include <iostream> //!< For input/output operations.
 
+ /**
+ * @class Pose
+ * @brief Class representing a position and orientation in 2D space.
+ *
+ * This class is used to represent a position and orientation in a 2D Cartesian coordinate system.
+ * It provides functionalities for setting and retrieving coordinates and orientation,
+ * performing arithmetic operations, comparing poses, and calculating spatial relationships such as
+ * distances and angles between poses. It is particularly useful for applications in robotics,
+ * navigation, and spatial reasoning.
+ */
 
 class Pose {
 private:
