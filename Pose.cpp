@@ -1,3 +1,15 @@
+/**
+ * @file   Pose.cpp
+ * @author Sefa Celenk
+ * @date   December, 2024
+ * @brief  Source file for the Pose class, which represents a position and orientation in a 2D space.
+ *
+ * This file contains the implementation of the Pose class, which allows for the representation and manipulation
+ * of positions and orientations in a 2D space. The class provides functionalities for setting and getting
+ * the position and orientation, calculating distances and angles to other positions, and performing basic
+ * arithmetic operations such as addition and subtraction of poses. Overloaded operators allow for intuitive
+ * pose manipulation and comparison.
+ */
 #include "Pose.h"
 #include <cmath> //!< For mathematical functions like sqrt and atan2.
 
