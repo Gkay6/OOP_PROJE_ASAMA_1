@@ -1,3 +1,10 @@
+/**
+ * @file   SafeNavigation.cpp
+ * @author Gokay Taspinar
+ * @date   22.12.2024
+ * @brief  Implementation of the SafeNavigation class methods
+ */
+
 #include "SafeNavigation.h"
 
 // Constructor
@@ -8,7 +15,7 @@ SafeNavigation::SafeNavigation(RobotController* _controller, IRSensor* _ir_senso
 }
 
 
-//  Moves the robot forward until there is an obstacle in 0.50 m
+// Moves the robot forward until there is an obstacle in 0.50 m
 void SafeNavigation::moveForwardSafe() {
 
 	// Updating the sensors and stopping the robot takes time
@@ -46,7 +53,7 @@ void SafeNavigation::moveForwardSafe() {
 }
 
 
-// Moves the robot bakward until there is an obstacle in 0.50 m
+// Moves the robot backward until there is an obstacle in 0.50 m
 void SafeNavigation::moveBackwardSafe() {
 
 	// Updating the sensors and stopping the robot takes time

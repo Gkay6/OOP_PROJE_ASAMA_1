@@ -1,3 +1,10 @@
+/**
+ * @file   IRSensor.cpp
+ * @author Gokay Taspinar
+ * @date   22.12.2024
+ * @brief  Implementation of the IRSensor class methods
+ */
+
 #include "IRSensor.h"
 #include <iostream>
 
