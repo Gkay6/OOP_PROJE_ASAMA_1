@@ -1,6 +1,15 @@
+/**
+ * @file   Menu.cpp
+ * @author Gokay Taspinar
+ * @date   22.12.2024
+ * @brief  Implementation of the Menu class methods
+ */
+
 #include "Menu.h"
 
-
+ /*!
+  * Initializes robot api but also the robot controller for the connectRobot() function
+  */
 Menu::Menu(FestoRobotAPI* robotAPI) :
 	robotAPI(robotAPI){
 	
@@ -11,6 +20,9 @@ Menu::Menu(FestoRobotAPI* robotAPI) :
 }
 
 
+/*!
+ * Creates ir_sensor, lidar_sensor, safe_navigation and mapper obejcts
+ */
 void Menu::create_objects() {
 	ir_sensor = new IRSensor(robotAPI);
 	lidar_sensor = new LidarSensor(robotAPI);
@@ -19,6 +31,9 @@ void Menu::create_objects() {
 }
 
 
+/*!
+ * Menu starts from here, users can open Connection, Motion and Sensor menus
+ */
 void Menu::Main_Menu() {
 	std::string menu_text = "Main Menu\n1. Connection\n2. Motion\n3. Sensor\n4. Quit\n";
 
@@ -59,6 +74,9 @@ void Menu::Main_Menu() {
 }
 
 
+/*!
+ * Connection menu, users can connect or disconnect to the robot
+ */
 void Menu::Connection_Menu() {
 	std::string menu_text = "Connection Menu\n1. Connect Robot\n2. Disconnect Robot\n3. Back\n";
 
@@ -80,7 +98,9 @@ void Menu::Connection_Menu() {
 			break;
 		case 2:
 			std::cout << "<Disconnect>\n";
-			robot_controller->disconnectRobot();
+			if (robot_controller->disconnectRobot()) {
+				is_robot_connected = false;
+			}
 			break;
 		case 3:
 			std::cout << "Back\n";
@@ -95,6 +115,9 @@ void Menu::Connection_Menu() {
 }
 
 
+/*!
+ * Motion menu, has all the methods related to the robot movement
+ */
 void Menu::Motion_Menu() {
 	std::string menu_text = "Motion Menu\n0. Stop\n1. Move Left\n2. Move Backward\n3. Move Right\n"
 		"4. Turn Left\n5. Move Forward\n6. Turn Right\n7. Move Forward Safe\n8. Move Backward Safe\n9. Back\n";
@@ -147,6 +170,9 @@ void Menu::Motion_Menu() {
 			loop = false;
 			break;
 		case 10:
+			// Shortcut for update map
+			robot_controller->stop();
+			Sleep(100);
 			mapper->updateMap();
 		default:
 			std::cout << "Invalid option, enter again\n\n";
@@ -156,6 +182,10 @@ void Menu::Motion_Menu() {
 }
 
 
+/*!
+ * Sensor menu, users can print sensors values and display the map
+ * update sensor values and update and record the map 
+ */
 void Menu::Sensor_Menu() {
 	std::string menu_text = "Sensor Menu\n1. Print IR sensor\n2. Print Lidar sensor\n3. Show Map\n"
 		"4. Update IR Sensor\n5. Update lidar Sensor\n6. Update Map\n7. Record map\n8. Back\n";
