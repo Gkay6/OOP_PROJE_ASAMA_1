@@ -1,6 +1,6 @@
 /*!
  * \file Mapper.h
- * \author Utku Buðra Namkazan
+ * \author Utku Bugra Namkazan
  * \date 22.12.2024
  * \brief Header file for the Mapper class, 
  * \which gets data from lidar sensors from LidarSensor class, 

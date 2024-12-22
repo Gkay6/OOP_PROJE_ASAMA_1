@@ -1,6 +1,6 @@
 /*!
  * \file LidarSensor.cpp
- * \author Utku Buðra Namkazan
+ * \author Utku Bugra Namkazan
  * \date 22.12.2024
  * \brief Implementation file for the LidarSensor class, which gets data from lidar sensors from the robot using the FestoRobotAPI.
  */
