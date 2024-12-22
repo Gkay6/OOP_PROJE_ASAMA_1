@@ -18,12 +18,13 @@
 #include <iostream>
 
 
- /**
-  * @class Menu
-  * @brief Class to connect all classes related to the robot
-  *
-  * Provides methods that safely moves the robot, which stops the robot 0.50 m before there is an obstacle
-  */
+/**
+* @class Menu
+* @brief Class to connect all classes related to the robot
+*
+* This class is an interface for the robot, users can connect and control the robot,
+* look at its sensor values and map the robots surroundings
+*/
 class Menu
 {
 private:
