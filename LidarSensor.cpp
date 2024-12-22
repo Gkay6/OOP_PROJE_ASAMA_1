@@ -1,6 +1,11 @@
 #include "LidarSensor.h"
-#define degree_diff 0.3603603603603604
+#define degree_diff 0.3603603603603604 //!< Angular difference between consecutive sensors. 
 #include <iostream>
+
+// Constructor
+/*! 
+ * \brief Constructor implementation for the LidarSensor class. 
+ */
 LidarSensor::LidarSensor(FestoRobotAPI* _robotAPI)
 	:robotAPI(_robotAPI)
 {
@@ -15,11 +20,28 @@ LidarSensor::LidarSensor(FestoRobotAPI* _robotAPI)
 	delete[] temp_ranges;
 }
 
+// Destructor
+/*! 
+ *\brief Destructor implementation for the LidarSensor class.
+ */
+LidarSensor::~LidarSensor()
+{
+	delete[] this->ranges;
+}
+
+// Retrieve the number of lidar sensors
+/*!
+ * \brief Retrieves the number of lidar sensors on the robot.
+ */
 int LidarSensor::getRangeNumber() const
 {
 	return this->rangeNumber;
 }
 
+// Retrieve distance reading from a specific lidar sensor
+/*!
+ *\brief Retrieves the distance reading from a specific lidar sensor. 
+ */
 double LidarSensor::getRange(int index) const
 {
 	if (index < this->rangeNumber)
@@ -33,6 +55,10 @@ double LidarSensor::getRange(int index) const
 	}
 }
 
+// Retrieve the maximum distance value and its index
+/*! 
+ *\brief Retrieves the maximum distance value and its index.
+ */
 double LidarSensor::getMax(int& index) const
 {
 	double max_value = ranges[0];
@@ -47,6 +73,10 @@ double LidarSensor::getMax(int& index) const
 	return max_value;
 }
 
+// Retrieve the minimum distance value and its index
+/*! 
+ *\brief Retrieves the minimum distance value and its index. 
+ */
 double LidarSensor::getMin(int& index) const
 {
 	double min_value = ranges[0];
@@ -61,28 +91,25 @@ double LidarSensor::getMin(int& index) const
 	return min_value;
 }
 
+// Update lidar sensor readings
+/*! 
+ *\brief Updates the lidar sensor readings and prints them to the console.
+ */
 void LidarSensor::update() const
 {
-	//int number = this->robotAPI->getLidarRangeNumber();
-
-	//float* ranges = new float[number];
-	std::cout << "--------------------LIDAR VALUES (in meters)-------------------------------------" << endl;
 	float* temp_ranges = new float[this->rangeNumber];
-
 	this->robotAPI->getLidarRange(temp_ranges);
 	for (int i = 0; i < this->rangeNumber; i++)
 	{
 		this->ranges[i] = (double)temp_ranges[i];
 	}
-	delete[] temp_ranges;
-	for (int i = 0; i < this->rangeNumber; i++) 
-	{
-		std::cout << i << "-> " << this->getRange(i) << " " << this->getAngle(i) << " degrees" << std::endl;
-	}
-	
- 	std::cout << "----------------------------------------------------------------------" << endl;
+	delete[] temp_ranges;	
 }
 
+// Access operator implementation
+/*!
+ *\brief Access operator implementation.
+ */
 double& LidarSensor::operator[](int index)
 {
 	if (index < this->rangeNumber)
@@ -95,16 +122,13 @@ double& LidarSensor::operator[](int index)
 		exit(0);
 	}
 }
-
+// Calculate the angle of a specific lidar sensor
+/*!
+ * \brief Calculates the angle of a specific lidar sensor.
+ */
 double LidarSensor::getAngle(int i) const
 {
 	return 120 - degree_diff * i;
 }
 
-LidarSensor::~LidarSensor()
-{
-	std::cout << "~LidarSensor start" << std::endl;
-	delete[] this->ranges;
-	std::cout << "~LidarSensor end" << std::endl;
-}
 
