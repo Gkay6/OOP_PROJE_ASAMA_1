@@ -15,15 +15,14 @@ int main() {
 	SafeNavigation sn(&rc, &irs);
 
 	Sleep(500);
-	//sn.moveBackwardSafe();
+	std::cout << "Safe move forward\n";
 	sn.moveForwardSafe();
-
-	Sleep(10000);
-
-
-
-
-	//Sleep(1000000);
+	Sleep(100);
+	std::cout << "Safe move backward\n";
+	sn.moveBackwardSafe();
+	Sleep(100);
+	std::cout << "Test ended\n";
 
 
+	return 0;
 }
