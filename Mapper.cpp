@@ -26,7 +26,6 @@ void Mapper::updateMap()
 	//current_location.getX()		x0
 	//current_location.getY()		y0
 	//current_location.getTh()		alpha (radyan)
-	std::cout << current_location.getTh() << std::endl;
 	for (int i = 0; i < lidar.getRangeNumber(); i++)
 	{
 		const double d = lidar[i];
@@ -48,7 +47,6 @@ void Mapper::updateMap()
 		}		
 	}
 	current_location = controller->getPose();
-	std::cout << current_location.getTh() << std::endl;
 }
 
 /*! \brief Records the current map to a file.
