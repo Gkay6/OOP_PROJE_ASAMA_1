@@ -1,3 +1,13 @@
+/*!
+ * \file Mapper.h
+ * \author Utku Buðra Namkazan
+ * \date 22.12.2024
+ * \brief Header file for the Mapper class, 
+ * \which gets data from lidar sensors from LidarSensor class, 
+ * \gets data from pose information from RobotController class, 
+ * \stores the data at a map from MAP class, 
+ * \records the data to a file using Record class
+ */
 #ifndef MAPPER_H
 #define MAPPER_H
 #ifndef M_PI
@@ -37,4 +47,9 @@ public:
 	/*! \brief Displays the map on the console. */
 	void showMap();
 };
+/*! \brief Function to test the Mapper class.
+ *  \param mapper Reference to a Mapper object.
+ */
+void MapperTest(Mapper& mapper);
+
 #endif

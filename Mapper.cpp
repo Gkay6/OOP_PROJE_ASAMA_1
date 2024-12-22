@@ -1,3 +1,13 @@
+/*!
+ * \file Mapper.h
+ * \author Utku Buðra Namkazan
+ * \date 22.12.2024
+ * \brief Implementation file for the Mapper class,
+ * \which gets data from lidar sensors from LidarSensor class,
+ * \gets data from pose information from RobotController class,
+ * \stores the data at a map from MAP class,
+ * \records the data to a file using Record class
+ */
 #include "Mapper.h"
 
 #define SCALE 4//!< Scale factor for converting real-world coordinates to grid coordinates.

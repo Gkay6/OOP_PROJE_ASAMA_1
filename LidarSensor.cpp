@@ -1,3 +1,9 @@
+/*!
+ * \file LidarSensor.cpp
+ * \author Utku Buðra Namkazan
+ * \date 22.12.2024
+ * \brief Implementation file for the LidarSensor class, which gets data from lidar sensors from the robot using the FestoRobotAPI.
+ */
 #include "LidarSensor.h"
 #define degree_diff 0.3603603603603604 //!< Angular difference between consecutive sensors. 
 #include <iostream>
