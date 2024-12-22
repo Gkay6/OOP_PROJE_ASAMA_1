@@ -1,25 +1,11 @@
-/*!
- * \file RobotControllerTest.cpp
- * \author Sefa Çelenk
- * \date 20.12.2024
- * \brief Test file for the RobotController class. Contains a test function to verify robot movements and pose updates.
- */
-
 #include "RobotController.h"
 #include <iostream>
 #include <windows.h> // For Sleep function
 
-/*!
- * \brief Prints a separator line for better test output readability.
- */
 void printSeparator() {
     std::cout << "-----------------------------\n";
 }
 
-/*!
- * \brief Test function for the RobotController class. Verifies robot movements and pose updates.
- * \param robotino Reference to an instance of RobotController.
- */
 void RobotControllerTest(RobotController& robotino) {
     std::cout << "RobotControllerTest-start\n";
     printSeparator();
