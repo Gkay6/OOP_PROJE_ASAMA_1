@@ -1,11 +1,14 @@
 #include "Mapper.h"
 
-#define SCALE 4
+#define SCALE 4//!< Scale factor for converting real-world coordinates to grid coordinates.
+
+/*! \brief Mapper constructor implementation. */
 Mapper::Mapper(RobotController* controller, LidarSensor& lidar)
 	:map((int)(16 * SCALE), (int)(16 * SCALE), (int)(-7.5 * SCALE), (int)(-7.5 * SCALE)), controller(controller), lidar(lidar)
 {
 }
 
+/*! \brief Updates the map based on the robot's current pose and lidar sensor data. */
 void Mapper::updateMap()
 {
 	Pose current_location = controller->getPose();
@@ -20,7 +23,6 @@ void Mapper::updateMap()
 		if (d != INFINITE && -d != INFINITE)
 		{
 			Point temp_point;
-			//std::cout << i << " " << current_location.getX() << " + " << lidar[i] << " * cos(" << (current_location.getTh() + lidar.getAngle(i)) * (M_PI / 180.0) << ")" << std::endl;
 			temp_point.setX
 			(
 				SCALE * (current_location.getX() + d * (std::cos(current_location.getTh() + lidar.getAngle(i) * (M_PI / 180.0))))
@@ -32,7 +34,6 @@ void Mapper::updateMap()
 				SCALE * (current_location.getY() + d * (std::sin(current_location.getTh() + lidar.getAngle(i) * (M_PI / 180.0))))
 				// y1 = y0 + d * sin(alpha + beta)
 			);
-			//std::cout << i << "-> " << (float)temp_point.getX() << ", " << (float)temp_point.getY() << std::endl;
 			map.insertPoint(temp_point);
 		}		
 	}
@@ -40,6 +41,9 @@ void Mapper::updateMap()
 	std::cout << current_location.getTh() << std::endl;
 }
 
+/*! \brief Records the current map to a file.
+ *  \return True if the map was successfully recorded, false otherwise.
+ */
 bool Mapper::recordMap()
 {
 	Record robotino_record;
@@ -71,6 +75,7 @@ bool Mapper::recordMap()
 	return false;
 }
 
+/*! \brief Displays the current map on the console. */
 void Mapper::showMap()
 {
 	map.showMap();
