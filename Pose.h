@@ -1,15 +1,16 @@
-#ifndef POSE_H
-#define POSE_H
-
-#include <cmath> //!< For mathematical functions like sqrt and atan2.
-#include <iostream> //!< For input/output operations.
-
 /*!
  * \class Pose
  * \brief Class representing an Pose.
  * \author Sefa Çelenk
  * \date 20.12.2024
  */
+#ifndef POSE_H
+#define POSE_H
+
+#include <cmath> //!< For mathematical functions like sqrt and atan2.
+#include <iostream> //!< For input/output operations.
+
+
 class Pose {
 private:
     double x;   //!< X-coordinate of the Pose.
@@ -142,7 +143,3 @@ public:
 void PoseTest();
 
 #endif // POSE_H
-
-
-
-
