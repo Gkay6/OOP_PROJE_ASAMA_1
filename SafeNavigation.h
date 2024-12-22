@@ -27,9 +27,9 @@ enum MOVESTATE {
 class SafeNavigation
 {
 private:
-	IRSensor* ir_sensor; // IR Sensor is used to detect obstacles
-	RobotController* controller; // Controller is used to move and stop the robot
-	MOVESTATE state; // Robots move state
+	IRSensor* ir_sensor; //!< IR Sensor is used to detect obstacles
+	RobotController* controller; //!< Controller is used to move and stop the robot
+	MOVESTATE state; //!< Robots move state
 public:
 	
 	//! Constructor

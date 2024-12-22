@@ -37,6 +37,9 @@ void IRSensor::update(int index) {
 
 
 // Returns last IR sensor reading at given index
+/*!
+ * \return last IR sensor reading at given index
+ */
 double IRSensor::getRange(int index) {
 	
 	if (index >= 0 && index < 9) {
@@ -49,6 +52,9 @@ double IRSensor::getRange(int index) {
 
 
 // [] operator overload, returns last IR sensor reading at given index
+/*!
+ * \return last IR sensor reading at given index
+ */
 double& IRSensor::operator[](int index) {
 	
 	if (index >= 0 && index < 9) {
