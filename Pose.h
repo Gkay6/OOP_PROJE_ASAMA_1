@@ -1,8 +1,14 @@
-/*!
- * \class Pose
- * \brief Class representing an Pose.
- * \author Sefa Çelenk
- * \date 20.12.2024
+/**
+ * @file   Pose.h
+ * @author Sefa Çelenk
+ * @date   December, 2024
+ * @brief  Header file for the Pose class, which represents a position and orientation in 2D space.
+ *
+ * This file contains the definition of the Pose class, which is used to represent a position and orientation
+ * in a 2D space. The class provides methods for setting and getting the position and orientation, calculating
+ * distances and angles to other positions, and performing basic arithmetic operations. Overloaded operators
+ * enable intuitive manipulation and comparison of Pose objects. This class is useful for applications involving
+ * robotics, navigation, and spatial calculations.
  */
 #ifndef POSE_H
 #define POSE_H
