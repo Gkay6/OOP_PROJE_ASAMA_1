@@ -6,26 +6,28 @@
  */
 #ifndef LIDAR_SENSOR_H
 #define LIDAR_SENSOR_H
-#include "FestoRobotAPI.h"
+#include "FestoRobotSensorInterface.h"
 
  /*! \class LidarSensor
   *  \brief A class to interact with and retrieve data from the lidar sensors on a robot.
   */
-class LidarSensor
+class LidarSensor : public FestoRobotSensorInterface
 {
 private:
     double* ranges; //!< Array storing the distance readings from the lidar sensors.
-    FestoRobotAPI* robotAPI; //!< Pointer to the FestoRobotAPI object for sensor interaction.
     int rangeNumber; //!< Number of lidar sensors available on the robot.
 
 public:
     /*! \brief Constructor that initializes the LidarSensor with a given API object.
      *  \param _robotAPI Pointer to an instance of FestoRobotAPI.
      */
-    LidarSensor(FestoRobotAPI* _robotAPI);
+    explicit LidarSensor(FestoRobotAPI* _robotAPI);
 
     /*! \brief Destructor to clean up allocated resources. */
     ~LidarSensor();
+
+    std::string getSensorType() const override { return "lidar"; }
+    double getSensorValue(int index) const override { return getRange(index); }
 
     /*! \brief Retrieves the number of lidar sensors on the robot.
      *  \return The count of lidar sensors.
@@ -51,7 +53,7 @@ public:
     double getMin(int& index) const;
 
     /*! \brief Updates the lidar sensor readings. */
-    void update() const;
+    void update(int index = -1) override;
 
     /*! \brief Access operator to retrieve or modify the distance reading of a specific sensor.
      *  \param index Index of the sensor.
@@ -71,4 +73,4 @@ public:
  */
 void LidarSensorTest(LidarSensor& lidarsensor);
 
-#endif
+#endif //LIDAR_SENSOR_H
