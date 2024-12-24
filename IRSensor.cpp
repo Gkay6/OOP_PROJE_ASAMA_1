@@ -10,9 +10,9 @@
 
 
 // Constructor
-IRSensor::IRSensor(FestoRobotAPI* _robotAPI){
-	robotAPI = _robotAPI;
-
+IRSensor::IRSensor(FestoRobotAPI* _robotAPI)
+    : FestoRobotSensorInterface(_robotAPI)
+{
 	// Initial sensor values
 	for (int i = 0; i < 9; i++) {
 		ranges[i] = INT_MAX;
@@ -21,7 +21,7 @@ IRSensor::IRSensor(FestoRobotAPI* _robotAPI){
 
 
 // Updates the sensor at the given index, if no index is given updates all the sensors.
-void IRSensor::update(int index) {
+void IRSensor::update(int index)override {
 	
 	if (index == -1) {
 		// Update all sensors
@@ -33,6 +33,9 @@ void IRSensor::update(int index) {
 		// Update single sensor
 		ranges[index] = robotAPI->getIRRange(index) * CONVERSION_FACTOR;
 	}
+	else {
+        std::cerr << "IRSensor::update error, invalid index!" << std::endl;
+        }
 }
 
 
@@ -47,6 +50,7 @@ double IRSensor::getRange(int index) {
 	}
 	else {
 		std::cerr << "Invalid index\n";
+		return -1.0;
 	}
 }
 
@@ -62,5 +66,18 @@ double& IRSensor::operator[](int index) {
 	}
 	else {
 		std::cerr << "Invalid index\n";
+		static double error_value = -1.0;
+        	return error_value;
 	}
+}
+
+
+double IRSensor::getSensorValue(int index) const {
+    if (index >= 0 && index < 9) {
+        return ranges[index];
+    }
+    else {
+        std::cerr << "Invalid index in getSensorValue\n";
+        return -1.0;
+    }
 }
