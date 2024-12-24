@@ -13,7 +13,7 @@
  * \brief Constructor implementation for the LidarSensor class. 
  */
 LidarSensor::LidarSensor(FestoRobotAPI* _robotAPI)
-	:robotAPI(_robotAPI)
+	: FestoRobotSensorInterface(_robotAPI)
 {
 	this->rangeNumber = this->robotAPI->getLidarRangeNumber();
 	this->ranges = new double[this->rangeNumber];
@@ -101,15 +101,28 @@ double LidarSensor::getMin(int& index) const
 /*! 
  *\brief Updates the lidar sensor readings and prints them to the console.
  */
-void LidarSensor::update() const
+void LidarSensor::update(int index) override
 {
+    if (index == -1) 
+    {
+        float* temp_ranges = new float[this->rangeNumber];
+        this->robotAPI->getLidarRange(temp_ranges);
+        for (int i = 0; i < this->rangeNumber; i++)
+        {
+            this->ranges[i] = (double)temp_ranges[i];
+        }
+        delete[] temp_ranges;
+    }
+    else if (index >= 0 && index < this->rangeNumber) 
+    {
 	float* temp_ranges = new float[this->rangeNumber];
-	this->robotAPI->getLidarRange(temp_ranges);
-	for (int i = 0; i < this->rangeNumber; i++)
-	{
-		this->ranges[i] = (double)temp_ranges[i];
-	}
-	delete[] temp_ranges;	
+        this->robotAPI->getLidarRange(temp_ranges);
+        this->ranges[index] = (double)temp_ranges[index];
+        delete[] temp_ranges;
+    }
+    else {
+        std::cerr << "LidarSensor::update error, invalid index!" << std::endl;
+    }
 }
 
 // Access operator implementation
