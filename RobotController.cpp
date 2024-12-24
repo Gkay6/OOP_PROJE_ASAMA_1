@@ -267,8 +267,15 @@ bool RobotController::closeAccess(int password) {
  * @param sensor A pointer to the sensor to be added.
  */
 void RobotController::addSensor(SensorInterface* sensor) {
-    // To be implemented later
+    if (!sensor) {
+        std::cerr << "Error: Null sensor cannot be added.\n";
+        return;
+    }
+
+    sensorList.push_back(sensor);
+    std::cout << "Sensor added: " << sensor->getSensorType() << "\n";
 }
+
 
 /**
  * @brief Updates all sensors attached to the robot.
@@ -276,5 +283,17 @@ void RobotController::addSensor(SensorInterface* sensor) {
  * This function is not yet implemented.
  */
 void RobotController::updateSensors() {
-    // To be implemented later
+    if (!accessGranted) {
+        std::cerr << "Access denied. Cannot update sensors.\n";
+        return;
+    }
+
+    std::cout << "Updating all sensors...\n";
+    for (auto sensor : sensorList) {
+        if (sensor) {
+            sensor->update();
+            std::cout << "Sensor updated: " << sensor->getSensorType() << "\n";
+        }
+    }
 }
+
