@@ -7,7 +7,7 @@
 
 #ifndef IRSENSOR_H
 #define IRSENSOR_H
-#include "FestoRobotAPI.h"
+#include "FestoRobotSensorInterface.h"
 
  /**
   * @class IRSensor
@@ -15,11 +15,10 @@
   *
   * Provides methods that read sensor data and returns calculated distance values for the sensors
   */
-class IRSensor
+class IRSensor : public FestoRobotSensorInterface
 {
 private:
 	double ranges[9]; //!< Stores sensor values
-	FestoRobotAPI* robotAPI; //!< Robot API
 	
 	// FestoRobotAPI returns incorrect distance values
 	// The value is used to convert the API values to actual distance
@@ -29,8 +28,10 @@ private:
 public:
 
 	//! Constructor
-	IRSensor(FestoRobotAPI* robotAPI);
-	
+	explicit IRSensor(FestoRobotAPI* robotAPI);
+
+	std::string getSensorType() const override { return "IR"; }
+        double getSensorValue(int index) const override { return getRange(index); }
 	//! Updates the sensor at the given index, if no index is given updates all the sensors.
 	void update(int index = -1);
 
