@@ -69,7 +69,7 @@ public:
     /*!
      * @return true if operator has access, false otherwise
      */
-    bool getAccessState() const;
+    bool checkAccessState() const;
 };
 
 #endif // ROBOTOPERATOR_H
