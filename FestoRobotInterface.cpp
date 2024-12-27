@@ -56,3 +56,14 @@ bool FestoRobotInterface::disconnectRobot() {
     robotAPI->disconnect();
     return true;
 }
+void FestoRobotInterface::addSensor(SensorInterface* sensor) {
+    sensorList.push_back(sensor);
+}
+
+void FestoRobotInterface::updateSensors() {
+    for (auto& sensor : sensorList) {
+        if (sensor) {
+            sensor->updateSensor();
+        }
+    }
+}
