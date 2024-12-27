@@ -67,3 +67,9 @@ void FestoRobotInterface::updateSensors() {
         }
     }
 }
+
+Pose FestoRobotInterface::getPose() const {
+    double x, y, theta;
+    robotAPI->getXYTh(x, y, theta); // Robotun pozisyonunu al
+    return Pose(x, y, theta); // Bir Pose nesnesi döndür
+}
