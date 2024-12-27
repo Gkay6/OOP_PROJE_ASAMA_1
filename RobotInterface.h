@@ -1,23 +1,18 @@
 #pragma once
 #include <list>
-#include "SensorInterface.h"
-
-class Pose {
-public:
-    double x, y, theta;
-
-    Pose(double x = 0, double y = 0, double theta = 0) : x(x), y(y), theta(theta) {}
-};
+#include "Robotcontroler.h"
+#include "Pose.h"
+#include "SensorInterface.h" // SensorInterface tanımlı olmalı
 
 class RobotInterface {
+private:
+    Pose* position;
+    bool connectionstatus();
 protected:
-    std::list<SensorInterface*> sensorList; //!< Sensörlerin adreslerini tutan liste
-    Pose currentPose; //!< Robotun mevcut pozisyonu
-
+    std::list<SensorInterface*> sensorList; // Sensör adreslerini tutan liste
 public:
     virtual ~RobotInterface() = default;
 
-    // Robot hareket fonksiyonları (saf sanal)
     virtual void turnLeft() = 0;
     virtual void turnRight() = 0;
     virtual void moveForward() = 0;
@@ -26,19 +21,14 @@ public:
     virtual void moveRight() = 0;
     virtual void stop() = 0;
 
-    // Pozisyon alma fonksiyonu
-    virtual Pose getPose() const;
+    virtual Pose getPose() const = 0;
 
-    // Robot bilgilerini yazdırma
-    virtual void print() const;
+    virtual void print() const = 0;
 
-    // Robot bağlantı fonksiyonları
-    virtual bool connectRobot();
-    virtual bool disconnectRobot();
+    virtual bool connectRobot() = 0;
+    virtual bool disconnectRobot() = 0;
 
-    // Sensör ekleme fonksiyonu
-    void addSensor(SensorInterface* sensor);
-
-    // Sensör güncelleme fonksiyonu
-    void updateSensors();
+    // Yeni sensör fonksiyonları
+    virtual void addSensor(SensorInterface* sensor) = 0;
+    virtual void updateSensors() = 0;
 };
