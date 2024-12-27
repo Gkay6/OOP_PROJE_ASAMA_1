@@ -2,14 +2,14 @@
 #include <list>
 #include "Robotcontroler.h"
 #include "Pose.h"
-#include "SensorInterface.h" // SensorInterface tanımlı olmalı
+#include "SensorInterface.h" 
 
 class RobotInterface {
 private:
     Pose* position;
-    bool connectionstatus();
+    bool connectionstatus(); //bunu ne zaman 1/0  yapmam gerek connect ve disconnect fonksiyonları ile anlamadım
 protected:
-    std::list<SensorInterface*> sensorList; // Sensör adreslerini tutan liste
+    std::list<SensorInterface*> sensorList;
 public:
     virtual ~RobotInterface() = default;
 
