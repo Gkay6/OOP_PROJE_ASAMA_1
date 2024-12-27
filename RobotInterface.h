@@ -7,8 +7,8 @@
 class RobotInterface {
 private:
     Pose* position;
-    bool connectionstatus(); //bunu ne zaman 1/0  yapmam gerek connect ve disconnect fonksiyonları ile anlamadım
-protected:
+    protected:
+    bool connectionStatus
     std::list<SensorInterface*> sensorList;
 public:
     virtual ~RobotInterface() = default;
