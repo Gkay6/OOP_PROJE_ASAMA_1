@@ -1,18 +1,19 @@
 #pragma once
-#include <list>
-#include "Robotcontroler.h"
 #include "Pose.h"
-#include "SensorInterface.h" 
+#include <list>
+#include "SensorInterface.h"
+
+
 
 class RobotInterface {
-private:
-    Pose* position;
-    protected:
-    bool connectionStatus
-    std::list<SensorInterface*> sensorList;
+protected:
+    Pose* position = nullptr;
+    bool connectionStatus;
+
 public:
     virtual ~RobotInterface() = default;
 
+    // Robot hareket fonksiyonları (saf sanal)
     virtual void turnLeft() = 0;
     virtual void turnRight() = 0;
     virtual void moveForward() = 0;
@@ -21,14 +22,13 @@ public:
     virtual void moveRight() = 0;
     virtual void stop() = 0;
 
+    // Pozisyon alma fonksiyonu
     virtual Pose getPose() const = 0;
 
+    // Robot bilgilerini yazdırma
     virtual void print() const = 0;
 
+    // Robot bağlantı fonksiyonları
     virtual bool connectRobot() = 0;
     virtual bool disconnectRobot() = 0;
-
-    // Yeni sensör fonksiyonları
-    virtual void addSensor(SensorInterface* sensor) = 0;
-    virtual void updateSensors() = 0;
 };

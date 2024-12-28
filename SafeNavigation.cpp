@@ -18,6 +18,11 @@ SafeNavigation::SafeNavigation(RobotController* _controller, IRSensor* _ir_senso
 // Moves the robot forward until there is an obstacle in 0.50 m
 void SafeNavigation::moveForwardSafe() {
 
+	if (controller->getAccessState() == false){
+		std::cerr << "Access denied. Cannot perform operation: moveForwardSafe()\n";
+		return;
+	}
+
 	// Updating the sensors and stopping the robot takes time
 	// In order to stop at desired distance
 	// Loop must end before the sensors showing 0.50 m
@@ -55,6 +60,11 @@ void SafeNavigation::moveForwardSafe() {
 
 // Moves the robot backward until there is an obstacle in 0.50 m
 void SafeNavigation::moveBackwardSafe() {
+
+	if (controller->getAccessState() == false) {
+		std::cerr << "Access denied. Cannot perform operation: moveBackwardSafe()\n";
+		return;
+	}
 
 	// Updating the sensors and stopping the robot takes time
 	// In order to stop at desired distance

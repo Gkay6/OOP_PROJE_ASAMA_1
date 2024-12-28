@@ -1,8 +1,8 @@
 #include "FestoRobotInterface.h"
 #include <iostream>
 
-FestoRobotInterface::FestoRobotInterface() {
-    robotAPI = new FestoRobotAPI();
+FestoRobotInterface::FestoRobotInterface(FestoRobotAPI* _robotAPI) {
+    robotAPI = _robotAPI;
 }
 
 FestoRobotInterface::~FestoRobotInterface() {
@@ -37,39 +37,49 @@ void FestoRobotInterface::stop() {
     robotAPI->stop();
 }
 
-void FestoRobotInterface::getPose(double& x, double& y, double& th) {
+Pose FestoRobotInterface::getPose() const {
+    double x;
+    double y;
+    double th;
     robotAPI->getXYTh(x, y, th);
+    return Pose(x, y, th);
 }
 
-void FestoRobotInterface::print() {
-    double x, y, th;
-    getPose(x, y, th);
-    std::cout << "Pose: X = " << x << ", Y = " << y << ", TH = " << th << std::endl;
+void FestoRobotInterface::print() const {
+    double x;
+    double y;
+    double th;
+    robotAPI->getXYTh(x, y, th);
+    std::cout << "Pose: X = " << x << ", Y = " << y << ", TH = " << th << "\n";
 }
 
 bool FestoRobotInterface::connectRobot() {
-    robotAPI->connect();
-    return true;
+    if (!connectionStatus) {
+        robotAPI->connect();
+        Sleep(2000);
+        connectionStatus = true;
+        double x = 0, y = 0, th = 0;
+
+        if (position == nullptr) {
+            position = new Pose();  // Dynamically allocate memory for position
+        }
+
+        robotAPI->getXYTh(x, y, th);
+        position->setPose(x, y, th);
+        std::cout << "Robot connected successfully.\n";
+        return true;
+    }
+    std::cout << "Robot already connected.\n";
+    return false;
 }
 
 bool FestoRobotInterface::disconnectRobot() {
-    robotAPI->disconnect();
-    return true;
-}
-void FestoRobotInterface::addSensor(SensorInterface* sensor) {
-    sensorList.push_back(sensor);
-}
-
-void FestoRobotInterface::updateSensors() {
-    for (auto& sensor : sensorList) {
-        if (sensor) {
-            sensor->updateSensor();
-        }
+    if (connectionStatus) {
+        robotAPI->disconnect();
+        connectionStatus = false;
+        std::cout << "Robot disconnected successfully.\n";
+        return true;
     }
-}
-
-Pose FestoRobotInterface::getPose() const {
-    double x, y, theta;
-    robotAPI->getXYTh(x, y, theta); // Robotun pozisyonunu al
-    return Pose(x, y, theta); // Bir Pose nesnesi döndür
+    std::cout << "Robot is not connected.\n";
+    return false;
 }

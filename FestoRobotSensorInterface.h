@@ -9,7 +9,7 @@ protected:
     FestoRobotAPI* robotAPI;
 
 public:
-    explicit FestoRobotSensorInterface(FestoRobotAPI* _robotAPI) : robotAPI(_robotAPI) {}
+    FestoRobotSensorInterface(FestoRobotAPI* _robotAPI, std::string _sensorType);
     virtual ~FestoRobotSensorInterface() = default;
 };
 

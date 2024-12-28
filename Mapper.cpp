@@ -21,6 +21,11 @@ Mapper::Mapper(RobotController* controller, LidarSensor& lidar)
 /*! \brief Updates the map based on the robot's current pose and lidar sensor data. */
 void Mapper::updateMap()
 {
+	if (controller->getAccessState() == false) {
+		std::cerr << "Access denied. Cannot perform operation: updateMap()\n";
+		return;
+	}
+
 	Pose current_location = controller->getPose();
 	lidar.update();
 	//current_location.getX()		x0
@@ -54,6 +59,11 @@ void Mapper::updateMap()
  */
 bool Mapper::recordMap()
 {
+	if (controller->getAccessState() == false) {
+		std::cerr << "Access denied. Cannot perform operation: recordMap()\n";
+		return false;
+	}
+
 	Record robotino_record;
 	robotino_record.setFileName(std::string("Mapper.txt"));
 	if (robotino_record.openFile())
@@ -86,5 +96,9 @@ bool Mapper::recordMap()
 /*! \brief Displays the current map on the console. */
 void Mapper::showMap()
 {
+	if (controller->getAccessState() == false) {
+		std::cerr << "Access denied. Cannot perform operation: showMap()\n";
+		return;
+	}
 	map.showMap();
 }

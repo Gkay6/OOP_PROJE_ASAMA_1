@@ -23,11 +23,9 @@ using namespace std;
  */
 class RobotOperator {
 private:
-    string name;            /*!< Operator's first name */
     string surname;         /*!< Operator's last name */
     unsigned int accessCode;/*!< Encrypted access code */
     bool accessState;       /*!< Current access state */
-    Encryption encryption;  /*!< Encryption object for security operations */
 
 public:
     //! Constructor for RobotOperator
@@ -36,7 +34,7 @@ public:
      * @param surname Operator's last name
      * @param code Access code to be encrypted and stored
      */
-    RobotOperator(const string& name, const string& surname, int code);
+    RobotOperator(const string& surname, int code);
 
     //! Encrypts a given access code
     /*!
@@ -57,7 +55,7 @@ public:
      * @param code The access code to verify
      * @return true if access is granted, false otherwise
      */
-    bool checkAccessCode(int code);
+    bool checkAccessCode(int code, bool openAccess = true);
 
     //! Prints operator information to console
     /*!
@@ -65,11 +63,12 @@ public:
      */
     void print() const;
 
-    //! Gets the current access state
+    //! Verifies if the provided access code is correct
     /*!
-     * @return true if operator has access, false otherwise
+     * @return true if access is granted, false otherwise
      */
-    bool checkAccessState() const { return accessState; }
+    bool getAccessState() const;
+
 };
 
 #endif // ROBOTOPERATOR_H

@@ -16,8 +16,8 @@
  * \param _surname Operator's last name
  * \param code Access code to be encrypted and stored
  */
-RobotOperator::RobotOperator(const std::string& _name, const std::string& _surname, int code)
-    : name(_name), surname(_surname), accessState(false) {
+RobotOperator::RobotOperator(const std::string& _surname, int code)
+    :surname(_surname), accessState(false) {
     accessCode = Encryption::encrypt(code);
 }
 
@@ -48,10 +48,21 @@ int RobotOperator::decryptCode(int code) {
  * \param code The access code to verify
  * \return true if the codes match, false otherwise
  */
-bool RobotOperator::checkAccessCode(int code) {
-    int encryptedInput = Encryption::encrypt(code);
-    accessState = (encryptedInput == accessCode);
-    return accessState;
+bool RobotOperator::checkAccessCode(int code, bool openAccess) {
+
+    int decryptedPass = Encryption::decrypt(accessCode);
+    
+    if (code == decryptedPass) {
+        if (openAccess) {
+            accessState = true;
+        }
+        else {
+            accessState = false;
+        }
+        return true; // Access code is correct
+    }
+    
+    return false; // Access code is incorrect
 }
 
 /*!
@@ -60,7 +71,15 @@ bool RobotOperator::checkAccessCode(int code) {
  */
 void RobotOperator::print() const {
     std::cout << "Operator Information: " << std::endl;
-    std::cout << "Name: " << name << std::endl;
     std::cout << "Surname: " << surname << std::endl;
     std::cout << "Access State: " << (accessState ? "Access Granted" : "Access Denied") << std::endl;
+}
+
+//! Verifies if the provided access code is correct
+/*!
+ * @return true if access is granted, false otherwise
+ */
+bool RobotOperator::getAccessState() const
+{
+    return this->accessState;
 }

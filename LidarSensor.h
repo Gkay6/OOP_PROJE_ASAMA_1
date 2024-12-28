@@ -25,8 +25,7 @@ public:
 
     /*! \brief Destructor to clean up allocated resources. */
     ~LidarSensor();
-
-    std::string getSensorType() const override { return "lidar"; }
+    
     double getSensorValue(int index) const override { return getRange(index); }
 
     /*! \brief Retrieves the number of lidar sensors on the robot.

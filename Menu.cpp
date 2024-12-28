@@ -13,8 +13,14 @@
 Menu::Menu(FestoRobotAPI* robotAPI) :
 	robotAPI(robotAPI){
 	
+	;
+	//robot_operator.checkAccessCode();
 	is_robot_connected = false;
-	robot_controller = new RobotController(robotAPI);
+
+	robot_interface = new FestoRobotInterface(robotAPI);
+	std::list<SensorInterface*> sensorList;
+
+	robot_controller = new RobotController(sensorList, robot_interface,"Name",1234);
 
 	Main_Menu();
 }
@@ -24,10 +30,19 @@ Menu::Menu(FestoRobotAPI* robotAPI) :
  * Creates ir_sensor, lidar_sensor, safe_navigation and mapper obejcts
  */
 void Menu::create_objects() {
-	ir_sensor = new IRSensor(robotAPI);
-	lidar_sensor = new LidarSensor(robotAPI);
-	safe_navigation = new SafeNavigation(robot_controller, ir_sensor);
-	mapper = new Mapper(robot_controller, *lidar_sensor);
+
+	static bool is_objects_created = false;
+
+	if (!is_objects_created) {
+		ir_sensor = new IRSensor(robotAPI);
+		lidar_sensor = new LidarSensor(robotAPI);
+		safe_navigation = new SafeNavigation(robot_controller, ir_sensor);
+		mapper = new Mapper(robot_controller, *lidar_sensor);
+
+		robot_controller->addSensor(ir_sensor);
+		robot_controller->addSensor(lidar_sensor);
+		is_objects_created = true;
+	}
 }
 
 
@@ -39,7 +54,7 @@ void Menu::Main_Menu() {
 
 	bool loop = true;
 	while (loop) {
-		
+
 		int choice = 0;
 		std::cout << menu_text << "Choose one: ";
 		std::cin >> choice;
@@ -78,7 +93,8 @@ void Menu::Main_Menu() {
  * Connection menu, users can connect or disconnect to the robot
  */
 void Menu::Connection_Menu() {
-	std::string menu_text = "Connection Menu\n1. Connect Robot\n2. Disconnect Robot\n3. Back\n";
+	std::string menu_text = "Connection Menu\n1. Connect Robot\n2. Disconnect Robot\n"
+		"3. Open Access\n4. Close Access\n5. Back\n";
 
 	bool loop = true;
 	while (loop) {
@@ -87,14 +103,16 @@ void Menu::Connection_Menu() {
 		std::cout << menu_text << "Choose one: ";
 		std::cin >> choice;
 		std::cout << "\n";
+		int access_code;
 
 		switch (choice) {
 		case 1:
 			std::cout << "<Connect>\n";
+
 			if (robot_controller->connectRobot()) {
 				is_robot_connected = true;
+				create_objects();
 			}
-			create_objects();
 			break;
 		case 2:
 			std::cout << "<Disconnect>\n";
@@ -103,6 +121,22 @@ void Menu::Connection_Menu() {
 			}
 			break;
 		case 3:
+			std::cout << "Enter password to open access: ";
+			std::cin >> access_code;
+
+			if (robot_controller->openAccess(access_code)) {
+				std::cout << "Succesfully opened the access\n";
+			}
+			break;
+		case 4:
+			std::cout << "Enter password to close access: ";
+			std::cin >> access_code;
+
+			if (robot_controller->closeAccess(access_code)) {
+				std::cout << "Succesfully closed the access\n";
+			}
+			break;
+		case 5:
 			std::cout << "Back\n";
 			loop = false;
 			break;
@@ -170,10 +204,11 @@ void Menu::Motion_Menu() {
 			loop = false;
 			break;
 		case 10:
-			// Shortcut for update map
+			// Dev shortcut for update map
 			robot_controller->stop();
 			Sleep(100);
 			mapper->updateMap();
+			break;
 		default:
 			std::cout << "Invalid option, enter again\n\n";
 		}
@@ -188,7 +223,7 @@ void Menu::Motion_Menu() {
  */
 void Menu::Sensor_Menu() {
 	std::string menu_text = "Sensor Menu\n1. Print IR sensor\n2. Print Lidar sensor\n3. Show Map\n"
-		"4. Update IR Sensor\n5. Update lidar Sensor\n6. Update Map\n7. Record map\n8. Back\n";
+		"4. Update Sensors\n5. Update Map\n6. Record map\n7. Back\n";
 
 	bool loop = true;
 	while (loop) {
@@ -200,11 +235,19 @@ void Menu::Sensor_Menu() {
 
 		switch (choice) {
 		case 1:
+			if (robot_controller->getAccessState() == false) {
+				std::cerr << "Access denied. Cannot print IR sensor\n";
+				break;
+			}
 			for (int i = 0; i < 9; i++) {
 				std::cout << "IR Sensor " << i << " : " << ir_sensor->getRange(i) << "\n";
 			}
 			break;
 		case 2:
+			if (robot_controller->getAccessState() == false) {
+				std::cerr << "Access denied. Cannot print Lidar sensor\n";
+				break;
+			}
 			for (int i = 0; i < lidar_sensor->getRangeNumber(); i++) {
 				std::cout << "Lidar Sensor " << i << " : " << lidar_sensor->getRange(i) << "\n";
 			}
@@ -213,18 +256,15 @@ void Menu::Sensor_Menu() {
 			mapper->showMap();
 			break;
 		case 4:
-			ir_sensor->update();
+			robot_controller->updateSensors();
 			break;
 		case 5:
-			lidar_sensor->update();
-			break;
-		case 6:
 			mapper->updateMap();
 			break;
-		case 7:
+		case 6:
 			mapper->recordMap();
 			break;
-		case 8:
+		case 7:
 			std::cout << "Back\n";
 			loop = false;
 			break;

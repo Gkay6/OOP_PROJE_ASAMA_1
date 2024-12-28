@@ -28,15 +28,15 @@ private:
 public:
 
 	//! Constructor
-	explicit IRSensor(FestoRobotAPI* robotAPI);
+	IRSensor(FestoRobotAPI* robotAPI);
 
-	std::string getSensorType() const override { return "IR"; }
-        double getSensorValue(int index) const override { return getRange(index); }
+	double getSensorValue(int index) const override;
+
 	//! Updates the sensor at the given index, if no index is given updates all the sensors.
 	void update(int index = -1);
 
 	//! Returns last IR sensor reading at given index
-	double getRange(int index);
+	double getRange(int index) const;
 	
 	//! [] operator overload, returns last IR sensor reading at given index
 	double& operator[](int index);

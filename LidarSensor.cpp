@@ -13,7 +13,7 @@
  * \brief Constructor implementation for the LidarSensor class. 
  */
 LidarSensor::LidarSensor(FestoRobotAPI* _robotAPI)
-	: FestoRobotSensorInterface(_robotAPI)
+	: FestoRobotSensorInterface(_robotAPI, std::string("LidarSensor"))
 {
 	this->rangeNumber = this->robotAPI->getLidarRangeNumber();
 	this->ranges = new double[this->rangeNumber];
@@ -101,7 +101,7 @@ double LidarSensor::getMin(int& index) const
 /*! 
  *\brief Updates the lidar sensor readings and prints them to the console.
  */
-void LidarSensor::update(int index) override
+void LidarSensor::update(int index)
 {
     if (index == -1) 
     {

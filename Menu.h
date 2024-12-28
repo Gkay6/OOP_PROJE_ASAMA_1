@@ -16,7 +16,8 @@
 #include "SafeNavigation.h"
 #include <string>
 #include <iostream>
-
+#include "FestoRobotInterface.h"
+#include "FestoRobotSensorInterface.h"
 
 /**
 * @class Menu
@@ -35,7 +36,10 @@ private:
 	SafeNavigation* safe_navigation = nullptr; //!< Safe Navigation for safe robot movement
 	Mapper* mapper = nullptr; //!< Mapper to map the robots surroundings
 	bool is_robot_connected; //!< Variable used to control the access of the menus
-	
+	bool access_state;
+
+	FestoRobotInterface* robot_interface;
+	FestoRobotSensorInterface* sensor_interface;
 	//! Method used to create all the objects after a succesful connection
 	void create_objects();
 public:

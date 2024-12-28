@@ -9,7 +9,6 @@ int main() {
 	//Create a robot object
 	robot = new FestoRobotAPI();
 
-
 	Menu robot_control_menu(robot);
 
 
