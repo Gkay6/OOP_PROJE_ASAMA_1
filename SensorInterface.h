@@ -1,6 +1,6 @@
 /**
  * @file   SensorInterface.h
- * @Author Beran Cagli
+ * @Author Beran Cagli, Utku Bugra Namkazan
  * @date   December, 2024
  * @brief  Header file for the SensorInterface class.
  *
