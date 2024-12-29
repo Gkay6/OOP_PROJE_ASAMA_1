@@ -10,7 +10,7 @@
 #define SAFENAVIGATION_H
 #include "IRSensor.h"
 #include "RobotController.h"
-
+#include "FestoRobotSensorInterface.h"
 
  //! Robot move state 
 enum MOVESTATE {
@@ -27,13 +27,13 @@ enum MOVESTATE {
 class SafeNavigation
 {
 private:
-	IRSensor* ir_sensor; //!< IR Sensor is used to detect obstacles
+	SensorInterface* ir_sensor; //!< IR Sensor is used to detect obstacles
 	RobotController* controller; //!< Controller is used to move and stop the robot
 	MOVESTATE state; //!< Robots move state
 public:
 	
 	//! Constructor
-	SafeNavigation(RobotController* _controller, IRSensor* _ir_sensor);
+	SafeNavigation(RobotController* _controller, SensorInterface* _ir_sensor);
 	
 	//! Moves the robot forward until there is an obstacle in 0.50 m
 	void moveForwardSafe();

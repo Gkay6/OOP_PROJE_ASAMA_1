@@ -1,14 +1,14 @@
 /**
  * @file   SafeNavigation.cpp
  * @author Gokay Taspinar
- * @date   22.12.2024
+ * @date   29.12.2024
  * @brief  Implementation of the SafeNavigation class methods
  */
 
 #include "SafeNavigation.h"
 
 // Constructor
-SafeNavigation::SafeNavigation(RobotController* _controller, IRSensor* _ir_sensor) {
+SafeNavigation::SafeNavigation(RobotController* _controller, SensorInterface* _ir_sensor) {
 	ir_sensor = _ir_sensor;
 	controller = _controller;
 	state = STOP;
@@ -43,12 +43,12 @@ void SafeNavigation::moveForwardSafe() {
 		ir_sensor->update(1);
 
 		// 45 degree sensors are used to prevent crashes at last moment
-		if (ir_sensor->getRange(0) < 0.50 + FORWARD_EARLY_STOP_DISTANCE) {
+		if (ir_sensor->getSensorValue(0) < 0.50 + FORWARD_EARLY_STOP_DISTANCE) {
 			state = STOP;
-		}else if (ir_sensor->getRange(8) < 0.25) {
+		}else if (ir_sensor->getSensorValue(8) < 0.25) {
 			state = STOP;
 		}
-		else if (ir_sensor->getRange(1) < 0.25) {
+		else if (ir_sensor->getSensorValue(1) < 0.25) {
 			state = STOP;
 		}
 	}
@@ -82,10 +82,10 @@ void SafeNavigation::moveBackwardSafe() {
 		ir_sensor->update(4);
 		ir_sensor->update(5);
 
-		if (ir_sensor->getRange(4) < 0.50 + BACKWARD_EARLY_STOP_DISTANCE) {
+		if (ir_sensor->getSensorValue(4) < 0.50 + BACKWARD_EARLY_STOP_DISTANCE) {
 			state = STOP;
 		}
-		else if (ir_sensor->getRange(5) < 0.50 + BACKWARD_EARLY_STOP_DISTANCE) {
+		else if (ir_sensor->getSensorValue(5) < 0.50 + BACKWARD_EARLY_STOP_DISTANCE) {
 			state = STOP;
 		}
 	}
