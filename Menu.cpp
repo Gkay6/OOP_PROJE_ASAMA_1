@@ -240,7 +240,7 @@ void Menu::Sensor_Menu() {
 				break;
 			}
 			for (int i = 0; i < 9; i++) {
-				std::cout << "IR Sensor " << i << " : " << ir_sensor->getRange(i) << "\n";
+				std::cout << "IR Sensor " << i << " : " << ir_sensor->getSensorValue(i) << "\n";
 			}
 			break;
 		case 2:
@@ -248,8 +248,8 @@ void Menu::Sensor_Menu() {
 				std::cerr << "Access denied. Cannot print Lidar sensor\n";
 				break;
 			}
-			for (int i = 0; i < lidar_sensor->getRangeNumber(); i++) {
-				std::cout << "Lidar Sensor " << i << " : " << lidar_sensor->getRange(i) << "\n";
+			for (int i = 0; i < 667; i++) {
+				std::cout << "Lidar Sensor " << i << " : " << lidar_sensor->getSensorValue(i) << "\n";
 			}
 			break;
 		case 3:

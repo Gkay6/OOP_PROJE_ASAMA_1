@@ -28,9 +28,9 @@ class Menu
 {
 private:
 	FestoRobotAPI* robotAPI; //!< Robot API
-	IRSensor* ir_sensor = nullptr; //!< IR Sensor
+	SensorInterface* ir_sensor = nullptr; //!< IR Sensor
 	RobotController* robot_controller = nullptr; //!< Robot Controller for robot movement
-	LidarSensor* lidar_sensor = nullptr; //!< Lidar Sensor
+	SensorInterface* lidar_sensor = nullptr; //!< Lidar Sensor
 	SafeNavigation* safe_navigation = nullptr; //!< Safe Navigation for safe robot movement
 	Mapper* mapper = nullptr; //!< Mapper to map the robots surroundings
 	bool is_robot_connected; //!< Variable used to control the access of the menus
