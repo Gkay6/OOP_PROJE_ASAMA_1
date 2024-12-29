@@ -15,6 +15,12 @@
  * high-level abstraction for interacting with the robot.
  */
 
+//! A concrete implementation of the RobotInterface for Festo robots.
+/*!
+ * The FestoRobotInterface class provides control and interaction functionalities
+ * for Festo robots using the FestoRobotAPI.
+ */
+
 class FestoRobotInterface : public RobotInterface {
 private:
     FestoRobotAPI* robotAPI; //!< Pointer to the API used for interacting with the Festo robot.
