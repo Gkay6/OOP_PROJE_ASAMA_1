@@ -16,6 +16,11 @@
  * by specific robot types, ensuring a consistent API for robot interactions.
  */
 
+//! An abstract class to define robot control functionalities.
+/*!
+ * The RobotInterface class provides a blueprint for robot control, 
+ * including movement, pose retrieval, and connection management.
+ */
 class RobotInterface {
 protected:
     Pose* position = nullptr; //!< Pointer to the robot's position data.
