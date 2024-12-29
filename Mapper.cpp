@@ -13,7 +13,7 @@
 #define SCALE 4//!< Scale factor for converting real-world coordinates to grid coordinates.
 
 /*! \brief Mapper constructor implementation. */
-Mapper::Mapper(RobotController* controller, LidarSensor& lidar)
+Mapper::Mapper(RobotController* controller, SensorInterface* lidar)
 	:map((int)(16 * SCALE), (int)(16 * SCALE), (int)(-7.5 * SCALE), (int)(-7.5 * SCALE)), controller(controller), lidar(lidar)
 {
 }
@@ -27,25 +27,25 @@ void Mapper::updateMap()
 	}
 
 	Pose current_location = controller->getPose();
-	lidar.update();
+	lidar->update();
 	//current_location.getX()		x0
 	//current_location.getY()		y0
-	//current_location.getTh()		alpha (radyan)
-	for (int i = 0; i < lidar.getRangeNumber(); i++)
+	//current_location.getTh()		alpha (radyan)//lidar.getRangeNumber()
+	for (int i = 0; i < static_cast<LidarSensor*>(lidar)->getRangeNumber(); i++)
 	{
-		const double d = lidar[i];
+		const double d = lidar->getSensorValue(i);
 		if (d != INFINITE && -d != INFINITE)
 		{
 			Point temp_point;
 			temp_point.setX
 			(
-				SCALE * (current_location.getX() + d * (std::cos(current_location.getTh() + lidar.getAngle(i) * (M_PI / 180.0))))
+				SCALE * (current_location.getX() + d * (std::cos(current_location.getTh() + static_cast<LidarSensor*>(lidar)->getAngle(i) * (M_PI / 180.0))))
 				// x1 = x0 + d * cos(alpha + beta)
 			);
 
 			temp_point.setY
 			(
-				SCALE * (current_location.getY() + d * (std::sin(current_location.getTh() + lidar.getAngle(i) * (M_PI / 180.0))))
+				SCALE * (current_location.getY() + d * (std::sin(current_location.getTh() + static_cast<LidarSensor*>(lidar)->getAngle(i) * (M_PI / 180.0))))
 				// y1 = y0 + d * sin(alpha + beta)
 			);
 			map.insertPoint(temp_point);

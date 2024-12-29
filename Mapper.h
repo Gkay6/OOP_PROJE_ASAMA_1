@@ -14,6 +14,7 @@
 #define M_PI 3.14159265358979323846 //!< Define PI if not already defined.
 #endif
 
+#include "SensorInterface.h"
 #include "LidarSensor.h"
 #include "RobotController.h"
 #include "MAP.h"
@@ -26,15 +27,15 @@ class Mapper
 {
 private:
 	RobotController* controller; //!< Pointer to the RobotController instance.
-	LidarSensor& lidar; //!< Reference to the LidarSensor instance.
+	SensorInterface* lidar; //!< Reference to the SensorInterface instance.
 	MAP map; //!< The map object to store and manage grid-based map data.
 public:
 	
 	/*! \brief Constructor that initializes the Mapper with a controller and lidar sensor.
 	 *  \param controller Pointer to an instance of RobotController.
-	 *  \param lidar Reference to an instance of LidarSensor.
+	 *  \param lidar Reference to an instance of SensorInterface.
 	 */
-	Mapper(RobotController* controller, LidarSensor& lidar);
+	Mapper(RobotController* controller, SensorInterface* lidar);
 
 	/*! \brief Updates the map using the current pose and lidar data. */
 	void updateMap();

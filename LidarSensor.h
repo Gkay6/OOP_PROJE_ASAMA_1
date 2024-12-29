@@ -21,16 +21,14 @@ public:
     /*! \brief Constructor that initializes the LidarSensor with a given API object.
      *  \param _robotAPI Pointer to an instance of FestoRobotAPI.
      */
-    explicit LidarSensor(FestoRobotAPI* _robotAPI);
+    LidarSensor(FestoRobotAPI* _robotAPI);
 
     /*! \brief Destructor to clean up allocated resources. */
     ~LidarSensor();
-    
-    double getSensorValue(int index) const override { return getRange(index); }
 
     /*! \brief Retrieves the number of lidar sensors on the robot.
-     *  \return The count of lidar sensors.
-     */
+    *  \return The count of lidar sensors.
+    */
     int getRangeNumber() const;
 
     /*! \brief Retrieves the distance reading of a specific lidar sensor.
@@ -65,6 +63,14 @@ public:
      *  \return Angle of the specified lidar sensor in degrees.
      */
     double getAngle(int i) const;
+
+    /*!
+    * \brief Retrieves the distance value from a specific lidar sensor.
+     * \param index The index of the lidar sensor to retrieve the value from.
+    * \return The distance value recorded by the specified lidar sensor.
+     * \note The index should be within the valid range [0, rangeNumber - 1].
+    */
+    double getSensorValue(int index) const override;
 };
 
 /*! \brief Function to test the LidarSensor class.

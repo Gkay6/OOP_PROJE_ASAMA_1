@@ -39,10 +39,12 @@ LidarSensor::~LidarSensor()
 /*!
  * \brief Retrieves the number of lidar sensors on the robot.
  */
+
 int LidarSensor::getRangeNumber() const
 {
 	return this->rangeNumber;
 }
+
 
 // Retrieve distance reading from a specific lidar sensor
 /*!
@@ -120,7 +122,8 @@ void LidarSensor::update(int index)
         this->ranges[index] = (double)temp_ranges[index];
         delete[] temp_ranges;
     }
-    else {
+    else 
+	{
         std::cerr << "LidarSensor::update error, invalid index!" << std::endl;
     }
 }
@@ -148,6 +151,18 @@ double& LidarSensor::operator[](int index)
 double LidarSensor::getAngle(int i) const
 {
 	return 120 - degree_diff * i;
+}
+
+// Gets sensor value
+/*!
+ * \brief Retrieves the distance value from a specific lidar sensor.
+ * \param index The index of the lidar sensor to retrieve the value from.
+ * \return The distance value recorded by the specified lidar sensor.
+ * \note The index should be within the valid range [0, rangeNumber - 1].
+ */
+double LidarSensor::getSensorValue(int index) const
+{
+	return this->ranges[index];
 }
 
 
