@@ -37,7 +37,7 @@ void Menu::create_objects() {
 		ir_sensor = new IRSensor(robotAPI);
 		lidar_sensor = new LidarSensor(robotAPI);
 		safe_navigation = new SafeNavigation(robot_controller, ir_sensor);
-		mapper = new Mapper(robot_controller, *lidar_sensor);
+		mapper = new Mapper(robot_controller, lidar_sensor);
 
 		robot_controller->addSensor(ir_sensor);
 		robot_controller->addSensor(lidar_sensor);
