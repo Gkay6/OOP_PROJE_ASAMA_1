@@ -1,6 +1,6 @@
 /**
  * @file   SensorInterface.cpp
- * @Author Beran Cagli
+ * @Author Beran Cagli, Utku Bugra Namkazan
  * @date   December, 2024
  * @brief  Implementation of the SensorInterface class.
  *
