@@ -4,7 +4,7 @@
 
 /** 
  * @file   FestoRobotInterface.h
- * @author Omer Ozkan
+ * @author Omer Ozkan,Gokay Taspinar
  * @date   December, 2024
  * @brief  Header file for the FestoRobotInterface class, which provides a concrete implementation 
  *         of the RobotInterface for controlling a Festo robot using FestoRobotAPI.
