@@ -3,7 +3,7 @@
 
 /** 
  * @file   FestoRobotInterface.cpp
- * @author Omer Ozkan
+ * @author Omer Ozkan, Gokay Taspinar
  * @date   December, 2024
  * @brief  Implementation file for the FestoRobotInterface class, defining methods 
  *         for controlling a Festo robot using FestoRobotAPI.
