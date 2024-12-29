@@ -1,6 +1,6 @@
 /** 
  * @file   RobotInterface.cpp
- * @author Omer Ozkan
+ * @author Omer Ozkan, Gokay Taspinar
  * @date   December, 2024
  * @brief  RobotInterface.cpp
  *
