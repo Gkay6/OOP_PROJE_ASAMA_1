@@ -8,7 +8,7 @@
  * @file RobotController.cpp
  * @brief Implementation file for the RobotController class.
  *
- * @author Sefa Çelenk
+ * @author Sefa Çelenk, Utku Bugra Namkazan
  * @date 24.12.2024
  *
  * This file contains the implementation of the RobotController class, which manages robot
