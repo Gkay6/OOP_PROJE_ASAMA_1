@@ -10,6 +10,15 @@
  * robot movement, interact with sensors, and manage the robot's connection and authentication.
  */
 
+#ifndef ROBOTCONTROLLER_H
+#define ROBOTCONTROLLER_H
+#include "Pose.h"
+#include "RobotInterface.h"
+#include "FestoRobotAPI.h"
+#include "RobotOperator.h"
+#include "SensorInterface.h"
+#include <list>
+
  /**
   * @class RobotController
   * @brief Manages robot operations, sensors, and access control.
@@ -177,3 +186,4 @@ public:
  */
 void RobotControllerTest(RobotController& robotino);
 
+#endif // ROBOTCONTROLLER_H
