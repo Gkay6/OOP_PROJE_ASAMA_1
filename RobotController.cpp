@@ -223,6 +223,12 @@ bool RobotController::closeAccess(int password) {
     return false;
 }
 
+/**
+ * @brief Gets the current access state of the robot operator.
+ *
+ * @return True if access is granted, false otherwise.
+ */
+
 bool RobotController::getAccessState() {
     return robotOperator.getAccessState();
 }
