@@ -1,25 +1,21 @@
 /**
  * @file   Menu.cpp
  * @author Gokay Taspinar
- * @date   22.12.2024
+ * @date   29.12.2024
  * @brief  Implementation of the Menu class methods
  */
 
 #include "Menu.h"
+#include "FestoRobotInterface.h"
 
  /*!
   * Initializes robot api but also the robot controller for the connectRobot() function
   */
 Menu::Menu(FestoRobotAPI* robotAPI) :
-	robotAPI(robotAPI){
-	
-	;
-	//robot_operator.checkAccessCode();
-	is_robot_connected = false;
+	robotAPI(robotAPI), is_robot_connected(false){
 
-	robot_interface = new FestoRobotInterface(robotAPI);
+	FestoRobotInterface* robot_interface = new FestoRobotInterface(robotAPI);
 	std::list<SensorInterface*> sensorList;
-
 	robot_controller = new RobotController(sensorList, robot_interface,"Name",1234);
 
 	Main_Menu();
@@ -27,12 +23,16 @@ Menu::Menu(FestoRobotAPI* robotAPI) :
 
 
 /*!
- * Creates ir_sensor, lidar_sensor, safe_navigation and mapper obejcts
+ * Creates objects which are neccessary for the robot like sensors and controllers
  */
 void Menu::create_objects() {
 
-	static bool is_objects_created = false;
+	// Creates the objects once
+	// However, we still cant connect after a disconnect beacuse FestoRobotAPI deosnt work
+	// But, this code piece is probably needed for other working APIs
 
+	static bool is_objects_created = false;
+	
 	if (!is_objects_created) {
 		ir_sensor = new IRSensor(robotAPI);
 		lidar_sensor = new LidarSensor(robotAPI);
@@ -66,14 +66,14 @@ void Menu::Main_Menu() {
 			break;
 		case 2:
 			if (!is_robot_connected) {
-				std::cout << "Can't use other menus before connecting to the robot\n\n";
+				std::cout << "Can't use motion menu before connecting to the robot\n\n";
 				break;
 			}
 			Motion_Menu();
 			break;
 		case 3:
 			if (!is_robot_connected) {
-				std::cout << "Can't use other menus before connecting to the robot\n\n";
+				std::cout << "Can't use sensor menu before connecting to the robot\n\n";
 				break;
 			}
 			Sensor_Menu();
@@ -275,8 +275,8 @@ void Menu::Sensor_Menu() {
 	// Back, returns to the main menu
 }
 
-void Menu::Quit() {
-	// Quit
+// Deletes objects
+Menu::~Menu() {
 	delete ir_sensor;
 	delete robot_controller;
 	delete lidar_sensor;

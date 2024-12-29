@@ -1,7 +1,7 @@
 /**
  * @file   Menu.h
  * @author Gokay Taspinar
- * @date   22.12.2024
+ * @date   29.12.2024
  * @brief  Header file for the Menu class
  */
 
@@ -16,8 +16,6 @@
 #include "SafeNavigation.h"
 #include <string>
 #include <iostream>
-#include "FestoRobotInterface.h"
-#include "FestoRobotSensorInterface.h"
 
 /**
 * @class Menu
@@ -36,16 +34,16 @@ private:
 	SafeNavigation* safe_navigation = nullptr; //!< Safe Navigation for safe robot movement
 	Mapper* mapper = nullptr; //!< Mapper to map the robots surroundings
 	bool is_robot_connected; //!< Variable used to control the access of the menus
-	bool access_state;
 
-	FestoRobotInterface* robot_interface;
-	FestoRobotSensorInterface* sensor_interface;
 	//! Method used to create all the objects after a succesful connection
 	void create_objects();
 public:
 
 	//! Constructor
 	Menu(FestoRobotAPI* robotAPI);
+
+	//! Destructor
+	~Menu();
 
 	//! Opens the main menu
 	void Main_Menu();
@@ -59,7 +57,5 @@ public:
 	//! Opens the sensor menu
 	void Sensor_Menu();
 
-	//! Closes the menu
-	void Quit();
 };
 #endif // MENU_H
