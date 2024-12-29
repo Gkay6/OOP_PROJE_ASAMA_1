@@ -5,7 +5,7 @@
 
 /** 
  * @file   RobotInterface.h
- * @author Omer Ozkan
+ * @author Omer Ozkan, Gokay Taspinar
  * @date   December, 2024
  * @brief  Header file for the RobotInterface class, which serves as an abstract base class 
  *         for different robot implementations, defining essential robot functionalities.
