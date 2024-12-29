@@ -12,7 +12,7 @@
  * @file RobotController.h
  * @brief Header file for the RobotController class.
  *
- * @author Sefa Çelenk
+ * @author Sefa Çelenk, Utku Bugra Namkazan
  * @date 24.12.2024
  *
  * This file contains the declaration of the RobotController class, which manages robot
